@@ -83,9 +83,9 @@ export default function Contact() {
           <h2 className="display-lg font-display" style={{ maxWidth: "16ch", marginInline: "auto", marginBottom: "1.4rem" }}>
             Let&apos;s build something impossible.
           </h2>
-          <p className="lede" style={{ maxWidth: "42ch", marginInline: "auto", marginBottom: "clamp(2.5rem, 5vh, 4rem)" }}>
-            We take on a small number of partners at a time. Tell us who you are
-            and what you want the world to remember.
+          <p className="lede" style={{ maxWidth: "44ch", marginInline: "auto", marginBottom: "clamp(2.5rem, 5vh, 4rem)" }}>
+            Monarch partners with a select few each year. Tell us what
+            you&apos;re building — and what you want the world to remember.
           </p>
         </Reveal>
 
@@ -101,9 +101,9 @@ export default function Contact() {
           >
             <div style={{ width: 10, height: 10, borderRadius: 99, background: "var(--champagne)", margin: "0 auto 1.4rem", boxShadow: "0 0 18px var(--champagne)" }} />
             <h3 className="display-md font-display" style={{ marginBottom: "0.8rem" }}>
-              Request received.
+              Received.
             </h3>
-            <p className="lede">Monarch will reach out. Watch your inbox.</p>
+            <p className="lede">Monarch will be in touch, personally.</p>
           </div>
         ) : (
           <form onSubmit={onSubmit} style={{ textAlign: "left" }}>
