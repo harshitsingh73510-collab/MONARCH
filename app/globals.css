@@ -2,7 +2,7 @@
 
 /* ============================================================
    MONARCH — Design System
-   Genre: Luxury AI Infrastructure
+   A digital experience studio.
    Void black · liquid titanium · whispered champagne
    ============================================================ */
 
@@ -212,6 +212,39 @@ body {
   inset: 0;
   z-index: 0;
   pointer-events: none;
+}
+
+/* CTAs */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 1rem 2rem;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.4s var(--ease-cine), border-color 0.4s var(--ease-cine),
+    color 0.4s var(--ease-cine), transform 0.35s var(--ease-cine);
+}
+.cta-primary {
+  background: var(--platinum);
+  color: var(--void);
+  border: 1px solid var(--platinum);
+}
+.cta-primary:hover {
+  background: var(--champagne);
+  border-color: var(--champagne);
+}
+.cta-ghost {
+  background: transparent;
+  color: var(--platinum);
+  border: 1px solid var(--fog-strong);
+}
+.cta-ghost:hover {
+  border-color: var(--champagne);
+  color: var(--champagne);
 }
 
 /* Scrollbar */

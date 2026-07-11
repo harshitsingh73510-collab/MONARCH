@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 /**
  * Contact intake. Validates the request and accepts it.
  *
- * To actually deliver these (email/CRM), wire a provider here — e.g. Resend:
+ * To actually deliver these (email), wire a provider here — e.g. Resend:
  *   const { Resend } = await import("resend");
  *   await new Resend(process.env.RESEND_API_KEY).emails.send({ ... });
  * Add RESEND_API_KEY in the Vercel project env and it goes live with no
@@ -24,8 +24,8 @@ export async function POST(req: Request) {
       );
     }
 
-    // For now, record the lead server-side. Replace with real delivery.
-    console.log("[monarch] access request:", { name, company, email });
+    // For now, record the inquiry server-side. Replace with real delivery.
+    console.log("[monarch] project inquiry:", { name, company, email });
 
     return NextResponse.json({ ok: true });
   } catch {

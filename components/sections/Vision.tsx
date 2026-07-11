@@ -3,9 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 
 const LINES = [
-  "We don’t believe AI replaces humans.",
-  "We believe intelligence deserves infrastructure.",
-  "Monarch is building it.",
+  "The screen is about to disappear.",
+  "What replaces it should feel human.",
+  "We’re building that future, one experience at a time.",
 ];
 
 export default function Vision() {
@@ -33,7 +33,7 @@ export default function Vision() {
   return (
     <section
       ref={wrapRef}
-      id="vision"
+      id="future"
       style={{ position: "relative", height: "320vh", zIndex: 2 }}
     >
       <div
@@ -90,8 +90,8 @@ export default function Vision() {
             >
               {i === 1 ? (
                 <>
-                  We believe intelligence deserves{" "}
-                  <span className="text-champagne">infrastructure.</span>
+                  What replaces it should feel{" "}
+                  <span className="text-champagne">human.</span>
                 </>
               ) : (
                 line

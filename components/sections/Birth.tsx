@@ -3,9 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 
 const LINES = [
-  "Every company eventually becomes too complex for people.",
-  "Monarch wasn’t built to automate work.",
-  "It was built to orchestrate intelligence.",
+  "Technology should disappear.",
+  "Emotion should remain.",
+  "We build for what people feel — long after the screen goes dark.",
 ];
 
 export default function Birth() {
@@ -96,8 +96,9 @@ export default function Birth() {
             >
               {i === 2 ? (
                 <>
-                  It was built to{" "}
-                  <span className="text-champagne">orchestrate intelligence.</span>
+                  We build for what people{" "}
+                  <span className="text-champagne">feel</span> — long after the
+                  screen goes dark.
                 </>
               ) : (
                 line

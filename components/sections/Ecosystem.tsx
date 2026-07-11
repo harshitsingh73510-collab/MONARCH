@@ -5,14 +5,14 @@ import Reveal from "@/components/Reveal";
 import EcosystemGalaxy from "@/components/EcosystemGalaxy";
 
 const PLANETS = [
-  { name: "Broker AI", desc: "Autonomous deal-making that never drops a thread." },
-  { name: "CEO AI", desc: "The company as one number, watched in real time." },
-  { name: "Manager AI", desc: "Operations that supervise, escalate and resolve themselves." },
-  { name: "Marketing AI", desc: "Campaigns that write, launch and optimise on their own." },
-  { name: "Automation Engine", desc: "Workflows that connect without a hand on the wheel." },
-  { name: "Voice AI", desc: "Calls answered, understood and acted on instantly." },
-  { name: "Knowledge Base", desc: "Every decision the company ever made, remembered." },
-  { name: "Analytics", desc: "Truth extracted from every signal, continuously." },
+  { name: "Experience Design", desc: "Interfaces that feel like places, not pages." },
+  { name: "Creative Engineering", desc: "Ideas made real, down to the last frame." },
+  { name: "Interactive Motion", desc: "Movement that carries meaning, never noise." },
+  { name: "Luxury Branding", desc: "Identities with the weight of something permanent." },
+  { name: "Immersive Web", desc: "WebGL worlds you enter, not websites you visit." },
+  { name: "Product Strategy", desc: "The thinking that makes the craft matter." },
+  { name: "Visual Systems", desc: "Design languages that scale without diluting." },
+  { name: "Creative Technology", desc: "The edge of what a browser can be made to do." },
 ];
 
 export default function Ecosystem() {
@@ -20,7 +20,7 @@ export default function Ecosystem() {
 
   return (
     <section
-      id="ecosystem"
+      id="capabilities"
       className="section"
       style={{ paddingBlock: "22vh", position: "relative", zIndex: 2 }}
     >
@@ -38,10 +38,10 @@ export default function Ecosystem() {
         <div>
           <Reveal>
             <p className="eyebrow" style={{ marginBottom: "1.6rem" }}>
-              006 — The ecosystem
+              02 — Capabilities
             </p>
             <h2 className="display-md font-display" style={{ marginBottom: "1.6rem" }}>
-              One mind. Many bodies.
+              Many disciplines. One obsession.
             </h2>
           </Reveal>
 

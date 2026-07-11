@@ -30,10 +30,11 @@ export default function IntelligenceCore({ count = 5200 }: { count?: number }) {
   const sprite = useMemo(() => makeSprite(), []);
   const RADIUS = 2.15;
 
-  const { positions, colors, home } = useMemo(() => {
+  const { positions, colors, home, seeds } = useMemo(() => {
     const positions = new Float32Array(count * 3);
     const home = new Float32Array(count * 3);
     const colors = new Float32Array(count * 3);
+    const seeds = new Float32Array(count * 3);
     const platinum = new THREE.Color("#e9eaec");
     const champagne = new THREE.Color("#e8c98f");
     const gold = 0.16; // fraction champagne
@@ -50,12 +51,16 @@ export default function IntelligenceCore({ count = 5200 }: { count?: number }) {
       positions[i * 3] = home[i * 3] = x;
       positions[i * 3 + 1] = home[i * 3 + 1] = yy;
       positions[i * 3 + 2] = home[i * 3 + 2] = z;
+      // per-particle phase so EVERY particle drifts on its own rhythm
+      seeds[i * 3] = Math.random() * Math.PI * 2;
+      seeds[i * 3 + 1] = Math.random() * Math.PI * 2;
+      seeds[i * 3 + 2] = Math.random() * Math.PI * 2;
       const c = Math.random() < gold ? champagne : platinum;
       colors[i * 3] = c.r;
       colors[i * 3 + 1] = c.g;
       colors[i * 3 + 2] = c.b;
     }
-    return { positions, colors, home };
+    return { positions, colors, home, seeds };
   }, [count]);
 
   const mouse = useRef(new THREE.Vector3(999, 999, 0));
@@ -76,21 +81,27 @@ export default function IntelligenceCore({ count = 5200 }: { count?: number }) {
     const arr = (pts.geometry.attributes.position as THREE.BufferAttribute)
       .array as Float32Array;
 
-    const breathe = 1 + Math.sin(t * 0.6) * 0.02;
+    const breathe = 1 + Math.sin(t * 0.6) * 0.03;
+    const AMP = 0.09; // continuous churn amplitude — keeps EVERY particle alive
 
     for (let i = 0; i < count; i++) {
       const ix = i * 3;
-      const hx = home[ix] * breathe;
-      const hy = home[ix + 1] * breathe;
-      const hz = home[ix + 2] * breathe;
+      // living target: home (breathing) + a unique per-particle drift so
+      // the entire shell is always in motion, not just where the cursor is
+      const ox = Math.sin(t * 0.9 + seeds[ix]) * AMP;
+      const oy = Math.sin(t * 1.15 + seeds[ix + 1]) * AMP;
+      const oz = Math.cos(t * 0.8 + seeds[ix + 2]) * AMP;
+      const hx = home[ix] * breathe + ox;
+      const hy = home[ix + 1] * breathe + oy;
+      const hz = home[ix + 2] * breathe + oz;
       let x = arr[ix];
       let y = arr[ix + 1];
       let z = arr[ix + 2];
 
-      // spring home
-      x += (hx - x) * d * 3.2;
-      y += (hy - y) * d * 3.2;
-      z += (hz - z) * d * 3.2;
+      // spring toward the living target
+      x += (hx - x) * d * 3.4;
+      y += (hy - y) * d * 3.4;
+      z += (hz - z) * d * 3.4;
 
       // cursor parts the field (only front-facing particles feel it)
       if (z > 0) {

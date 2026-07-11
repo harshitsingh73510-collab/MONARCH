@@ -23,7 +23,7 @@ export default function Footer() {
       >
         <div>
           <p className="eyebrow" style={{ marginBottom: "0.8rem" }}>
-            Monarch — engineering intelligent companies
+            Monarch — a digital experience studio
           </p>
           <a
             href="#contact"

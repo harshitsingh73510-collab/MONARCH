@@ -1,11 +1,10 @@
 import Arrival from "@/components/sections/Arrival";
-import Birth from "@/components/sections/Birth";
 import Problem from "@/components/sections/Problem";
-import MeetMonarch from "@/components/sections/MeetMonarch";
-import Intelligence from "@/components/sections/Intelligence";
+import Birth from "@/components/sections/Birth";
 import Ecosystem from "@/components/sections/Ecosystem";
-import Industries from "@/components/sections/Industries";
-import Proof from "@/components/sections/Proof";
+import Process from "@/components/sections/Process";
+import SelectedWork from "@/components/sections/SelectedWork";
+import WhyMonarch from "@/components/sections/WhyMonarch";
 import Vision from "@/components/sections/Vision";
 import Contact from "@/components/sections/Contact";
 import Footer from "@/components/sections/Footer";
@@ -14,13 +13,12 @@ export default function Home() {
   return (
     <main style={{ position: "relative" }}>
       <Arrival />
-      <Birth />
       <Problem />
-      <MeetMonarch />
-      <Intelligence />
+      <Birth />
       <Ecosystem />
-      <Industries />
-      <Proof />
+      <Process />
+      <SelectedWork />
+      <WhyMonarch />
       <Vision />
       <Contact />
       <Footer />

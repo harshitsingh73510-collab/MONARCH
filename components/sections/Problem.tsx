@@ -169,19 +169,19 @@ export default function Problem() {
 
   const copy = [
     {
-      eyebrow: "002 — The tax of growth",
-      title: "Every signal multiplies.",
-      sub: "Emails, clients, calls, contracts — until no human can hold the whole picture.",
+      eyebrow: "01 — The noise",
+      title: "The digital world has never been louder.",
+      sub: "Thousands of products launch every day. Each one louder than the last.",
     },
     {
-      eyebrow: "002 — Overload",
-      title: "And then it breaks.",
-      sub: "The lights blink red. Traffic stops. Everything slows.",
+      eyebrow: "01 — The sameness",
+      title: "And never more forgettable.",
+      sub: "The same templates. The same motion. The same forgettable feeling.",
     },
     {
-      eyebrow: "002 — The turn",
-      title: "One intelligence enters.",
-      sub: "Everything reorganizes. The city comes alive again.",
+      eyebrow: "01 — The exception",
+      title: "Then, rarely, something is made with obsession.",
+      sub: "And you never forget it. That is the only thing worth building.",
     },
   ];
 

@@ -57,11 +57,11 @@ export default function Chrome() {
           gap: "clamp(1rem, 2vw, 2.4rem)",
         }}
       >
-        <a href="#vision" data-hover style={{ color: "var(--titanium)" }}>
-          Vision
+        <a href="#work" data-hover style={{ color: "var(--titanium)" }}>
+          Work
         </a>
         <a href="#contact" data-hover style={{ color: "var(--titanium)" }}>
-          Request access
+          Start a project
         </a>
       </nav>
 

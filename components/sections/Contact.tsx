@@ -78,14 +78,14 @@ export default function Contact() {
       >
         <Reveal>
           <p className="eyebrow" style={{ marginBottom: "2rem" }}>
-            008 — Request access
+            06 — Let&apos;s begin
           </p>
-          <h2 className="display-lg font-display" style={{ maxWidth: "14ch", marginInline: "auto", marginBottom: "1.4rem" }}>
-            Give your company a mind.
+          <h2 className="display-lg font-display" style={{ maxWidth: "16ch", marginInline: "auto", marginBottom: "1.4rem" }}>
+            Let&apos;s build something impossible.
           </h2>
           <p className="lede" style={{ maxWidth: "42ch", marginInline: "auto", marginBottom: "clamp(2.5rem, 5vh, 4rem)" }}>
-            Monarch onboards a small number of companies each quarter. Tell us
-            who you are — we&apos;ll open the door.
+            We take on a small number of partners at a time. Tell us who you are
+            and what you want the world to remember.
           </p>
         </Reveal>
 
@@ -124,7 +124,7 @@ export default function Contact() {
               ))}
               <label style={{ display: "block", gridColumn: "1 / -1" }}>
                 <span className="eyebrow" style={{ display: "block", marginBottom: "0.7rem" }}>
-                  What should Monarch run? <span style={{ opacity: 0.5 }}>(optional)</span>
+                  Tell us about your project <span style={{ opacity: 0.5 }}>(optional)</span>
                 </span>
                 <textarea name="message" rows={3} data-hover className="c-input" style={{ resize: "none" }} />
               </label>

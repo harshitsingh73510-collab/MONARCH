@@ -25,9 +25,9 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "MONARCH — The physical form of intelligence",
+  title: "MONARCH — Digital Experience Studio",
   description:
-    "Monarch orchestrates intelligence. Not a company. An infrastructure for the way companies will think.",
+    "Monarch is a digital experience studio. We engineer immersive brands, products and interactive experiences the world doesn't forget.",
 };
 
 export default function RootLayout({

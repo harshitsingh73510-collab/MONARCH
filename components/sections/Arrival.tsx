@@ -127,7 +127,7 @@ export default function Arrival() {
             transition: "opacity 1.6s var(--ease-cine) .5s",
           }}
         >
-          The physical form of intelligence
+          Digital experience studio
         </div>
 
         <h1
@@ -159,15 +159,35 @@ export default function Arrival() {
           className="font-display"
           style={{
             marginTop: "clamp(1rem, 2.4vh, 2rem)",
-            fontSize: "clamp(0.9rem, 1.1vw, 1.15rem)",
+            fontSize: "clamp(0.95rem, 1.2vw, 1.25rem)",
             fontWeight: 300,
-            letterSpacing: "0.12em",
+            letterSpacing: "0.06em",
             color: "var(--titanium)",
             opacity: ready ? 1 : 0,
             transition: "opacity 1.6s var(--ease-cine) 1.7s",
           }}
         >
-          Not a company. A civilization.
+          We engineer experiences the world doesn&apos;t forget.
+        </div>
+
+        <div
+          style={{
+            marginTop: "clamp(2rem, 4vh, 3rem)",
+            display: "flex",
+            gap: "1.2rem",
+            justifyContent: "center",
+            flexWrap: "wrap",
+            pointerEvents: "auto",
+            opacity: ready ? 1 : 0,
+            transition: "opacity 1.6s var(--ease-cine) 2s",
+          }}
+        >
+          <a href="#work" data-hover className="font-mono cta cta-primary">
+            View selected work
+          </a>
+          <a href="#contact" data-hover className="font-mono cta cta-ghost">
+            Start a project
+          </a>
         </div>
       </div>
 
