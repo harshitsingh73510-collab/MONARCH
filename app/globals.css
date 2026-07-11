@@ -1,0 +1,221 @@
+@import "tailwindcss";
+
+/* ============================================================
+   MONARCH — Design System
+   Genre: Luxury AI Infrastructure
+   Void black · liquid titanium · whispered champagne
+   ============================================================ */
+
+:root {
+  --void: #050506;
+  --obsidian: #0b0b0e;
+  --graphite: #16161a;
+  --platinum: #f3f2ef;
+  --titanium: #8a8d93;
+  --titanium-dim: #55575c;
+  --champagne: #e8c98f;
+  --fog: rgba(243, 242, 239, 0.08);
+  --fog-strong: rgba(243, 242, 239, 0.16);
+
+  --ease-cine: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --pad: clamp(1.5rem, 5vw, 6rem);
+}
+
+@theme inline {
+  --color-void: var(--void);
+  --color-obsidian: var(--obsidian);
+  --color-platinum: var(--platinum);
+  --color-titanium: var(--titanium);
+  --color-champagne: var(--champagne);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--void);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: var(--void);
+  color: var(--platinum);
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* Hide native cursor on precise pointers — the custom cursor takes over */
+@media (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
+}
+
+::selection {
+  background: var(--champagne);
+  color: var(--void);
+}
+
+/* ---- Typography primitives ---- */
+.font-display {
+  font-family: var(--font-display), sans-serif;
+}
+.font-mono {
+  font-family: var(--font-mono), monospace;
+}
+
+.eyebrow {
+  font-family: var(--font-mono), monospace;
+  font-size: clamp(0.62rem, 0.75vw, 0.75rem);
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--titanium);
+  font-weight: 400;
+}
+
+.display-xl {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 300;
+  font-size: clamp(3rem, 13vw, 14rem);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+}
+
+.display-lg {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 300;
+  font-size: clamp(2.2rem, 6vw, 5.5rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.display-md {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 400;
+  font-size: clamp(1.6rem, 3.4vw, 3.2rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+
+.lede {
+  font-size: clamp(1.05rem, 1.5vw, 1.45rem);
+  line-height: 1.55;
+  color: var(--titanium);
+  font-weight: 300;
+}
+
+.text-champagne {
+  color: var(--champagne);
+}
+.text-titanium {
+  color: var(--titanium);
+}
+
+/* ---- Layout helpers ---- */
+.section {
+  position: relative;
+  padding-inline: var(--pad);
+  width: 100%;
+}
+
+.rule {
+  height: 1px;
+  width: 100%;
+  background: var(--fog);
+}
+
+/* ---- Reveal utility (JS toggles .is-in) ---- */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 1.2s var(--ease-cine), transform 1.2s var(--ease-cine);
+  will-change: opacity, transform;
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ---- Grain + vignette ---- */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  opacity: 0.05;
+}
+.vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 89;
+  pointer-events: none;
+  background: radial-gradient(
+    130% 100% at 50% 45%,
+    transparent 55%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+}
+
+/* ---- Custom cursor ---- */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  pointer-events: none;
+  border-radius: 999px;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+}
+.cursor-dot {
+  width: 5px;
+  height: 5px;
+  background: var(--platinum);
+}
+.cursor-ring {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--fog-strong);
+  transition: width 0.4s var(--ease-cine), height 0.4s var(--ease-cine),
+    border-color 0.4s var(--ease-cine), background 0.4s var(--ease-cine);
+}
+.cursor-ring.is-hover {
+  width: 64px;
+  height: 64px;
+  border-color: var(--champagne);
+  background: rgba(232, 201, 143, 0.06);
+}
+
+.particle-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
