@@ -4,7 +4,6 @@ import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import Cursor from "@/components/Cursor";
 import Grain from "@/components/Grain";
-import WebGLLayer from "@/components/webgl/WebGLLayer";
 import Chrome from "@/components/Chrome";
 
 const display = Space_Grotesk({
@@ -40,7 +39,6 @@ export default function RootLayout({
       className={`${display.variable} ${body.variable} ${mono.variable}`}
     >
       <body>
-        <WebGLLayer />
         <Grain />
         <Cursor />
         <Chrome />

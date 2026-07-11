@@ -1,24 +1,27 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
+
+const HeroCore = dynamic(() => import("@/components/webgl/HeroCore"), {
+  ssr: false,
+});
 
 const WORD = "MONARCH";
 
 export default function Arrival() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const mediaRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const media = mediaRef.current;
+    const stage = stageRef.current;
     const onScroll = () => {
-      const y = window.scrollY;
-      const p = Math.min(y / window.innerHeight, 1);
-      if (media) {
-        // scroll "into" the sphere — scale up + fade
-        media.style.transform = `scale(${1 + p * 0.45})`;
-        media.style.opacity = `${1 - p * 0.8}`;
-        media.style.filter = `blur(${p * 6}px)`;
+      const p = Math.min(window.scrollY / window.innerHeight, 1);
+      if (stage) {
+        // scroll "into" the core — scale up + fade
+        stage.style.transform = `scale(${1 + p * 0.5})`;
+        stage.style.opacity = `${1 - p * 0.85}`;
+        stage.style.filter = `blur(${p * 5}px)`;
       }
     };
     onScroll();
@@ -32,7 +35,6 @@ export default function Arrival() {
 
   return (
     <section
-      ref={sectionRef}
       id="top"
       style={{
         position: "relative",
@@ -44,9 +46,9 @@ export default function Arrival() {
         overflow: "hidden",
       }}
     >
-      {/* hero media — liquid sphere film (falls back to still) */}
+      {/* the core stage: liquid-metal heart + particle intelligence field */}
       <div
-        ref={mediaRef}
+        ref={stageRef}
         style={{
           position: "absolute",
           inset: 0,
@@ -54,32 +56,57 @@ export default function Arrival() {
           willChange: "transform, opacity, filter",
         }}
       >
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster="/assets/hero-sphere.webp"
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            opacity: ready ? 1 : 0,
-            transform: ready ? "scale(1)" : "scale(1.08)",
-            transition:
-              "opacity 2.4s var(--ease-cine), transform 3s var(--ease-cine)",
-          }}
-        >
-          <source src="/assets/hero-loop.mp4" type="video/mp4" />
-        </video>
+        {/* luminous liquid-metal heart (masked to a soft orb) */}
         <div
           style={{
             position: "absolute",
-            inset: 0,
+            top: "50%",
+            left: "50%",
+            width: "min(58vh, 62vw)",
+            height: "min(58vh, 62vw)",
+            transform: "translate(-50%, -50%)",
+            borderRadius: "50%",
+            overflow: "hidden",
+            opacity: ready ? 0.9 : 0,
+            transition: "opacity 2.6s var(--ease-cine)",
+            maskImage:
+              "radial-gradient(circle, black 52%, transparent 72%)",
+            WebkitMaskImage:
+              "radial-gradient(circle, black 52%, transparent 72%)",
+          }}
+        >
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster="/assets/hero-sphere.webp"
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          >
+            <source src="/assets/hero-loop.mp4" type="video/mp4" />
+          </video>
+        </div>
+
+        {/* soft aura */}
+        <div
+          aria-hidden
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            width: "min(80vh, 84vw)",
+            height: "min(80vh, 84vw)",
+            transform: "translate(-50%, -50%)",
             background:
-              "radial-gradient(130% 90% at 50% 45%, transparent 38%, rgba(5,5,6,0.6) 100%), linear-gradient(to bottom, rgba(5,5,6,0.45) 0%, transparent 32%, transparent 62%, rgba(5,5,6,0.92) 100%)",
+              "radial-gradient(circle, rgba(232,201,143,0.10) 0%, transparent 60%)",
+            filter: "blur(24px)",
           }}
         />
+
+        {/* WebGL intelligence field */}
+        <div style={{ position: "absolute", inset: 0 }}>
+          <HeroCore />
+        </div>
       </div>
 
       {/* wordmark */}
@@ -88,8 +115,8 @@ export default function Arrival() {
           position: "relative",
           zIndex: 2,
           textAlign: "center",
-          transform: "translateY(-1vh)",
           mixBlendMode: "difference",
+          pointerEvents: "none",
         }}
       >
         <div

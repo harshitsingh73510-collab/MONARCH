@@ -26,12 +26,12 @@ export default function Footer() {
             Monarch — engineering intelligent companies
           </p>
           <a
-            href="mailto:hello@monarch.studio"
+            href="#contact"
             data-hover
             className="font-mono"
             style={{ color: "var(--titanium)", fontSize: "0.8rem", textDecoration: "none" }}
           >
-            hello@monarch.studio
+            Request access →
           </a>
         </div>
         <p className="eyebrow" style={{ color: "var(--titanium-dim)" }}>

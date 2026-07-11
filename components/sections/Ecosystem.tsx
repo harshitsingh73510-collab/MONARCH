@@ -2,17 +2,17 @@
 
 import { useState } from "react";
 import Reveal from "@/components/Reveal";
-import MediaSlot from "@/components/MediaSlot";
+import EcosystemGalaxy from "@/components/EcosystemGalaxy";
 
 const PLANETS = [
-  "Broker AI",
-  "CEO AI",
-  "Manager AI",
-  "Marketing AI",
-  "Automation Engine",
-  "Voice AI",
-  "Knowledge Base",
-  "Analytics",
+  { name: "Broker AI", desc: "Autonomous deal-making that never drops a thread." },
+  { name: "CEO AI", desc: "The company as one number, watched in real time." },
+  { name: "Manager AI", desc: "Operations that supervise, escalate and resolve themselves." },
+  { name: "Marketing AI", desc: "Campaigns that write, launch and optimise on their own." },
+  { name: "Automation Engine", desc: "Workflows that connect without a hand on the wheel." },
+  { name: "Voice AI", desc: "Calls answered, understood and acted on instantly." },
+  { name: "Knowledge Base", desc: "Every decision the company ever made, remembered." },
+  { name: "Analytics", desc: "Truth extracted from every signal, continuously." },
 ];
 
 export default function Ecosystem() {
@@ -40,19 +40,34 @@ export default function Ecosystem() {
             <p className="eyebrow" style={{ marginBottom: "1.6rem" }}>
               006 — The ecosystem
             </p>
-            <h2 className="display-md font-display" style={{ marginBottom: "2rem" }}>
+            <h2 className="display-md font-display" style={{ marginBottom: "1.6rem" }}>
               One mind. Many bodies.
             </h2>
-            <p className="lede" style={{ marginBottom: "2.6rem", maxWidth: "36ch" }}>
-              Every product is a world of its own — orbiting a single core of
-              intelligence. Choose one and it opens.
-            </p>
           </Reveal>
+
+          {/* active planet detail */}
+          <div style={{ minHeight: "5.5rem", marginBottom: "2rem" }}>
+            <p className="eyebrow text-champagne" style={{ marginBottom: "0.8rem" }}>
+              {PLANETS[active].name}
+            </p>
+            <p
+              className="font-display"
+              style={{
+                fontSize: "clamp(1.1rem, 1.7vw, 1.55rem)",
+                fontWeight: 300,
+                lineHeight: 1.4,
+                color: "var(--platinum)",
+                maxWidth: "34ch",
+              }}
+            >
+              {PLANETS[active].desc}
+            </p>
+          </div>
 
           <ul style={{ listStyle: "none", borderTop: "1px solid var(--fog)" }}>
             {PLANETS.map((p, i) => (
               <li
-                key={p}
+                key={p.name}
                 data-hover
                 onMouseEnter={() => setActive(i)}
                 tabIndex={0}
@@ -60,10 +75,10 @@ export default function Ecosystem() {
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  gap: "1rem",
-                  padding: "0.9rem 0",
+                  gap: "0.9rem",
+                  padding: "0.7rem 0",
                   borderBottom: "1px solid var(--fog)",
-                  paddingLeft: active === i ? "1rem" : 0,
+                  paddingLeft: active === i ? "0.9rem" : 0,
                   transition: "padding-left .4s var(--ease-cine)",
                 }}
               >
@@ -76,38 +91,24 @@ export default function Ecosystem() {
                 <span
                   className="font-display"
                   style={{
-                    fontSize: "clamp(1.05rem, 1.8vw, 1.5rem)",
+                    fontSize: "clamp(0.95rem, 1.5vw, 1.25rem)",
                     fontWeight: 400,
                     color: active === i ? "var(--platinum)" : "var(--titanium)",
                     transition: "color .4s",
                   }}
                 >
-                  {p}
+                  {p.name}
                 </span>
               </li>
             ))}
           </ul>
         </div>
 
-        <div style={{ position: "relative" }}>
-          <MediaSlot
-            src="/assets/ai-core.webp"
-            label={PLANETS[active]}
-            ratio="1 / 1"
-            parallax={20}
-          />
-          <div
-            aria-hidden
-            style={{
-              position: "absolute",
-              inset: "-10%",
-              background:
-                "radial-gradient(circle at 50% 50%, rgba(232,201,143,0.12), transparent 60%)",
-              filter: "blur(30px)",
-              zIndex: -1,
-            }}
-          />
-        </div>
+        <EcosystemGalaxy
+          planets={PLANETS.map((p) => p.name)}
+          active={active}
+          setActive={setActive}
+        />
       </div>
 
       <style>{`

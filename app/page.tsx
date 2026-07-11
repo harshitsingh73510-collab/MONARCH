@@ -7,7 +7,7 @@ import Ecosystem from "@/components/sections/Ecosystem";
 import Industries from "@/components/sections/Industries";
 import Proof from "@/components/sections/Proof";
 import Vision from "@/components/sections/Vision";
-import Enter from "@/components/sections/Enter";
+import Contact from "@/components/sections/Contact";
 import Footer from "@/components/sections/Footer";
 
 export default function Home() {
@@ -22,7 +22,7 @@ export default function Home() {
       <Industries />
       <Proof />
       <Vision />
-      <Enter />
+      <Contact />
       <Footer />
     </main>
   );

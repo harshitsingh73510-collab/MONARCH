@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import Reveal from "@/components/Reveal";
-import MediaSlot from "@/components/MediaSlot";
+import LivingDashboard from "@/components/LivingDashboard";
 
 export default function MeetMonarch() {
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -48,13 +48,7 @@ export default function MeetMonarch() {
             willChange: "transform",
           }}
         >
-          <MediaSlot
-            src="/assets/dashboard.webp"
-            label="Monarch OS · live command surface"
-            ratio="16 / 9"
-            parallax={30}
-            priority
-          />
+          <LivingDashboard />
         </div>
 
         <div

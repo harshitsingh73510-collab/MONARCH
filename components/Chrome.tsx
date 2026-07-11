@@ -60,8 +60,8 @@ export default function Chrome() {
         <a href="#vision" data-hover style={{ color: "var(--titanium)" }}>
           Vision
         </a>
-        <a href="#enter" data-hover style={{ color: "var(--titanium)" }}>
-          Enter
+        <a href="#contact" data-hover style={{ color: "var(--titanium)" }}>
+          Request access
         </a>
       </nav>
 
