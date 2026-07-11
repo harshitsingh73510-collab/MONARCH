@@ -167,7 +167,7 @@ export default function Arrival() {
             transition: "opacity 1.6s var(--ease-cine) 1.7s",
           }}
         >
-          We engineer experiences the world doesn&apos;t forget.
+          We engineer experiences the world can&apos;t forget.
         </div>
 
         <div

@@ -4,10 +4,10 @@ import { useEffect, useRef } from "react";
 import Reveal from "@/components/Reveal";
 
 const BELIEFS = [
-  { no: "We don’t chase trends.", yes: "We build things that outlive them." },
-  { no: "We don’t decorate products.", yes: "We define what they are." },
-  { no: "We don’t animate for attention.", yes: "We animate for meaning." },
-  { no: "We don’t deliver files.", yes: "We deliver something unforgettable." },
+  { no: "Anyone can follow references.", yes: "We become the reference." },
+  { no: "Anyone can decorate a product.", yes: "We decide what it is." },
+  { no: "Anyone can add motion.", yes: "We make it mean something." },
+  { no: "Anyone can ship a file.", yes: "We ship a memory." },
 ];
 
 export default function WhyMonarch() {
@@ -71,7 +71,7 @@ export default function WhyMonarch() {
       >
         <Reveal>
           <p className="eyebrow" style={{ marginBottom: "1.6rem" }}>
-            05 — Why Monarch
+            06 — Why Monarch
           </p>
           <h2 className="display-md font-display" style={{ maxWidth: "18ch", marginBottom: "clamp(3rem,7vh,5rem)" }}>
             The difference is obsession.
@@ -96,13 +96,11 @@ export default function WhyMonarch() {
               }}
             >
               <p
-                className="font-display"
+                className="eyebrow"
                 style={{
-                  fontSize: "clamp(1rem, 1.4vw, 1.15rem)",
                   color: "var(--titanium-dim)",
-                  textDecoration: "line-through",
-                  textDecorationColor: "var(--fog-strong)",
-                  marginBottom: "0.9rem",
+                  marginBottom: "1rem",
+                  letterSpacing: "0.22em",
                 }}
               >
                 {b.no}

@@ -170,18 +170,18 @@ export default function Problem() {
   const copy = [
     {
       eyebrow: "01 — The noise",
-      title: "The digital world has never been louder.",
-      sub: "Thousands of products launch every day. Each one louder than the last.",
+      title: "A thousand products launched today.",
+      sub: "By tomorrow, you'll remember none of them.",
     },
     {
       eyebrow: "01 — The sameness",
-      title: "And never more forgettable.",
-      sub: "The same templates. The same motion. The same forgettable feeling.",
+      title: "The same template. The same motion.",
+      sub: "The internet has started to feel like one forgettable place.",
     },
     {
       eyebrow: "01 — The exception",
-      title: "Then, rarely, something is made with obsession.",
-      sub: "And you never forget it. That is the only thing worth building.",
+      title: "Then something is built with obsession.",
+      sub: "And you never forget it. That is the only thing we make.",
     },
   ];
 

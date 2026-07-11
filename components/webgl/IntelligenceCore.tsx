@@ -99,21 +99,23 @@ export default function IntelligenceCore({ count = 5200 }: { count?: number }) {
       let z = arr[ix + 2];
 
       // spring toward the living target
-      x += (hx - x) * d * 3.4;
-      y += (hy - y) * d * 3.4;
-      z += (hz - z) * d * 3.4;
+      x += (hx - x) * d * 2.7;
+      y += (hy - y) * d * 2.7;
+      z += (hz - z) * d * 2.7;
 
-      // cursor parts the field (only front-facing particles feel it)
-      if (z > 0) {
+      // cursor parts the field — smooth front-weighting (no hard z cutoff,
+      // so particles never pop in/out of influence near the equator)
+      const front = Math.max(0, (z + RADIUS * 0.4) / (RADIUS * 1.4));
+      if (front > 0) {
         const dx = x - mouse.current.x;
         const dy = y - mouse.current.y;
         const dist2 = dx * dx + dy * dy;
         if (dist2 < 1.4) {
-          const f = (1 - dist2 / 1.4) * d * 9;
+          const f = (1 - dist2 / 1.4) * front * d * 8;
           const inv = 1 / Math.sqrt(dist2 + 0.001);
           x += dx * inv * f;
           y += dy * inv * f;
-          z += f * 0.5;
+          z += f * 0.4;
         }
       }
 
@@ -130,7 +132,10 @@ export default function IntelligenceCore({ count = 5200 }: { count?: number }) {
   });
 
   return (
-    <points ref={ref}>
+    // frustumCulled off — we mutate positions every frame, so the stale
+    // bounding sphere would make Three cull (blink out) the whole cloud on
+    // rotation. This is the fix for the "glitch".
+    <points ref={ref} frustumCulled={false}>
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
         <bufferAttribute attach="attributes-color" args={[colors, 3]} />
@@ -138,12 +143,14 @@ export default function IntelligenceCore({ count = 5200 }: { count?: number }) {
       <pointsMaterial
         map={sprite}
         vertexColors
-        size={0.045}
+        size={0.05}
         sizeAttenuation
         transparent
         depthWrite={false}
+        depthTest={false}
+        toneMapped={false}
         blending={THREE.AdditiveBlending}
-        opacity={0.95}
+        opacity={0.92}
       />
     </points>
   );

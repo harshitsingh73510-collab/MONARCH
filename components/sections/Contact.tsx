@@ -78,7 +78,7 @@ export default function Contact() {
       >
         <Reveal>
           <p className="eyebrow" style={{ marginBottom: "2rem" }}>
-            06 — Let&apos;s begin
+            08 — Let&apos;s begin
           </p>
           <h2 className="display-lg font-display" style={{ maxWidth: "16ch", marginInline: "auto", marginBottom: "1.4rem" }}>
             Let&apos;s build something impossible.

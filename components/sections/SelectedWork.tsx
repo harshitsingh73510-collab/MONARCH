@@ -159,7 +159,7 @@ export default function SelectedWork() {
         style={{ maxWidth: "84rem", margin: "0 auto", paddingBlock: "16vh 8vh", textAlign: "center" }}
       >
         <p className="eyebrow" style={{ marginBottom: "1.6rem" }}>
-          04 — Selected work
+          05 — Selected work
         </p>
         <h2 className="display-md font-display" style={{ maxWidth: "18ch", margin: "0 auto" }}>
           A few worlds we&apos;ve been trusted to build.

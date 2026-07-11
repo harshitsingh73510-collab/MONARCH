@@ -38,7 +38,7 @@ export default function Ecosystem() {
         <div>
           <Reveal>
             <p className="eyebrow" style={{ marginBottom: "1.6rem" }}>
-              02 — Capabilities
+              03 — Capabilities
             </p>
             <h2 className="display-md font-display" style={{ marginBottom: "1.6rem" }}>
               Many disciplines. One obsession.

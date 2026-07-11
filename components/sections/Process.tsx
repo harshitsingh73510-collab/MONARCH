@@ -50,7 +50,7 @@ export default function Process() {
       >
         <div style={{ maxWidth: "84rem", margin: "0 auto", width: "100%" }}>
           <p className="eyebrow" style={{ marginBottom: "clamp(2rem,5vh,4rem)" }}>
-            03 — How we work
+            04 — The process
           </p>
 
           <div style={{ display: "flex", gap: "clamp(2rem, 6vw, 6rem)", alignItems: "flex-start" }}>
