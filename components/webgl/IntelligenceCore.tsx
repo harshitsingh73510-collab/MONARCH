@@ -91,14 +91,25 @@ export default function IntelligenceCore({ count = 6400 }: { count?: number }) {
     const breathe = 1 + Math.sin(t * 0.6) * 0.025;
     const AMP = 0.045; // subtle churn — alive but the shell reads as one object
 
+    // rotation is BAKED into the per-particle target (not the object
+    // transform) so local space stays aligned with world space — the cursor
+    // then parts every side of the sphere symmetrically (fixes "dead" side).
+    const ang = t * 0.05;
+    const cosA = Math.cos(ang);
+    const sinA = Math.sin(ang);
+
     for (let i = 0; i < count; i++) {
       const ix = i * 3;
+      const bx = home[ix];
+      const bz = home[ix + 2];
+      const rx = bx * cosA + bz * sinA;
+      const rz = -bx * sinA + bz * cosA;
       const ox = Math.sin(t * 0.9 + seeds[ix]) * AMP;
       const oy = Math.sin(t * 1.15 + seeds[ix + 1]) * AMP;
       const oz = Math.cos(t * 0.8 + seeds[ix + 2]) * AMP;
-      const hx = home[ix] * breathe + ox;
+      const hx = rx * breathe + ox;
       const hy = home[ix + 1] * breathe + oy;
-      const hz = home[ix + 2] * breathe + oz;
+      const hz = rz * breathe + oz;
       let x = arr[ix];
       let y = arr[ix + 1];
       let z = arr[ix + 2];
@@ -133,11 +144,6 @@ export default function IntelligenceCore({ count = 6400 }: { count?: number }) {
     }
     (pts.geometry.attributes.position as THREE.BufferAttribute).needsUpdate =
       true;
-
-    // slow, intentional rotation + faint cursor-follow tilt (only in view)
-    pts.rotation.y += d * 0.055;
-    if (heroVisible)
-      pts.rotation.x += (pointer.y * 0.1 - pts.rotation.x) * d * 1.5;
   });
 
   return (
