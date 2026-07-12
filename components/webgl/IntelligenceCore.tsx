@@ -24,11 +24,11 @@ function makeSprite() {
  * rotates slowly and parts around the cursor — a living intelligence that
  * reacts to the user. The site's single, deliberate WebGL investment.
  */
-export default function IntelligenceCore({ count = 5200 }: { count?: number }) {
+export default function IntelligenceCore({ count = 6400 }: { count?: number }) {
   const ref = useRef<THREE.Points>(null);
   const { viewport, pointer } = useThree();
   const sprite = useMemo(() => makeSprite(), []);
-  const RADIUS = 2.15;
+  const RADIUS = 1.55;
 
   const { positions, colors, home, seeds } = useMemo(() => {
     const positions = new Float32Array(count * 3);
@@ -85,11 +85,11 @@ export default function IntelligenceCore({ count = 5200 }: { count?: number }) {
     // it's scrolled away, snap the shell home so it's always pristine on return
     const heroVisible =
       typeof window !== "undefined" &&
-      window.scrollY < window.innerHeight * 0.9;
-    const springK = heroVisible ? 3.2 : 12; // fast reset when off-screen
+      window.scrollY < window.innerHeight * 0.85;
+    const springK = heroVisible ? 3.6 : 16; // hard snap-home when off-screen
 
     const breathe = 1 + Math.sin(t * 0.6) * 0.025;
-    const AMP = 0.06; // continuous churn — every particle alive, shell stays tight
+    const AMP = 0.045; // subtle churn — alive but the shell reads as one object
 
     for (let i = 0; i < count; i++) {
       const ix = i * 3;
@@ -109,19 +109,20 @@ export default function IntelligenceCore({ count = 5200 }: { count?: number }) {
       y += (hy - y) * k;
       z += (hz - z) * k;
 
-      // cursor parts the field — only while the hero is in view
+      // cursor parts the field dramatically — only while the hero is in view
       if (heroVisible) {
-        const front = Math.max(0, (z + RADIUS * 0.4) / (RADIUS * 1.4));
+        const front = Math.max(0, (z + RADIUS * 0.5) / (RADIUS * 1.5));
         if (front > 0) {
           const dx = x - mouse.current.x;
           const dy = y - mouse.current.y;
           const dist2 = dx * dx + dy * dy;
-          if (dist2 < 1.1) {
-            const f = (1 - dist2 / 1.1) * front * d * 5.5;
+          const R2 = 2.3; // wider reach
+          if (dist2 < R2) {
+            const f = (1 - dist2 / R2) * front * d * 16; // stronger push
             const inv = 1 / Math.sqrt(dist2 + 0.001);
             x += dx * inv * f;
             y += dy * inv * f;
-            z += f * 0.3;
+            z += f * 0.5;
           }
         }
       }
@@ -151,14 +152,14 @@ export default function IntelligenceCore({ count = 5200 }: { count?: number }) {
       <pointsMaterial
         map={sprite}
         vertexColors
-        size={0.05}
+        size={0.055}
         sizeAttenuation
         transparent
         depthWrite={false}
         depthTest={false}
         toneMapped={false}
         blending={THREE.AdditiveBlending}
-        opacity={0.92}
+        opacity={0.95}
       />
     </points>
   );
