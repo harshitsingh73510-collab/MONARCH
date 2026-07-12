@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import ProcessGraphic from "@/components/ProcessGraphic";
 
 const STAGES = [
   { n: "01", name: "Discover", line: "We learn your world." },
@@ -45,7 +46,7 @@ export default function Process() {
     <section
       ref={wrapRef}
       id="process"
-      style={{ position: "relative", height: `${STAGES.length * 62}vh`, zIndex: 2 }}
+      style={{ position: "relative", height: `${STAGES.length * 64}vh`, zIndex: 2 }}
     >
       <div
         style={{
@@ -58,51 +59,23 @@ export default function Process() {
         }}
         className="section"
       >
-        {/* giant ghost numeral behind everything */}
-        <div
-          aria-hidden
-          style={{
-            position: "absolute",
-            right: "clamp(-4vw, -2vw, 0px)",
-            top: "50%",
-            transform: "translateY(-50%)",
-            zIndex: 0,
-            pointerEvents: "none",
-          }}
-        >
-          {STAGES.map((s, i) => (
-            <span
-              key={s.n}
-              className="font-display"
-              style={{
-                position: "absolute",
-                right: 0,
-                top: "50%",
-                transform: `translateY(-50%) scale(${i === active ? 1 : 0.86})`,
-                fontSize: "min(46vh, 40vw)",
-                fontWeight: 500,
-                lineHeight: 1,
-                letterSpacing: "-0.04em",
-                color: "transparent",
-                WebkitTextStroke: "1px rgba(243,242,239,0.07)",
-                opacity: i === active ? 1 : 0,
-                transition: "opacity .9s var(--ease-cine), transform 1.1s var(--ease-cine)",
-              }}
-            >
-              {s.n}
-            </span>
-          ))}
-        </div>
-
         <div style={{ position: "relative", zIndex: 1, maxWidth: "84rem", margin: "0 auto", width: "100%" }}>
-          <p className="eyebrow" style={{ marginBottom: "clamp(2rem,5vh,4rem)" }}>
+          <p className="eyebrow" style={{ marginBottom: "clamp(2rem,5vh,3.5rem)" }}>
             04 — The process
           </p>
 
-          <div style={{ display: "flex", gap: "clamp(2rem, 6vw, 6rem)", alignItems: "stretch" }}>
-            {/* progress spine that fills */}
-            <div className="proc-rail" style={{ display: "flex", gap: "1.4rem" }}>
-              <div style={{ position: "relative", width: 1, background: "var(--fog)", alignSelf: "stretch" }}>
+          <div
+            className="proc-grid"
+            style={{
+              display: "grid",
+              gridTemplateColumns: "auto minmax(0,1fr) minmax(0, 0.9fr)",
+              gap: "clamp(2rem, 5vw, 5rem)",
+              alignItems: "center",
+            }}
+          >
+            {/* progress spine */}
+            <div className="proc-rail" style={{ display: "flex", gap: "1.3rem", height: "42vh" }}>
+              <div style={{ position: "relative", width: 1, background: "var(--fog)" }}>
                 <div
                   ref={spineRef}
                   style={{
@@ -132,8 +105,8 @@ export default function Process() {
               </div>
             </div>
 
-            {/* active stage */}
-            <div style={{ flex: 1, position: "relative", minHeight: "44vh", display: "flex", alignItems: "center" }}>
+            {/* active stage text */}
+            <div style={{ position: "relative", minHeight: "42vh", display: "flex", alignItems: "center" }}>
               {STAGES.map((s, i) => (
                 <div
                   key={s.n}
@@ -144,48 +117,59 @@ export default function Process() {
                     flexDirection: "column",
                     justifyContent: "center",
                     opacity: i === active ? 1 : 0,
-                    transform: i === active ? "translateY(0)" : "translateY(30px)",
+                    transform: i === active ? "translateY(0)" : "translateY(28px)",
                     filter: i === active ? "blur(0)" : "blur(6px)",
                     transition:
                       "opacity .8s var(--ease-cine), transform .9s var(--ease-cine), filter .8s var(--ease-cine)",
                     pointerEvents: "none",
                   }}
                 >
+                  <span className="font-mono" style={{ fontSize: "0.8rem", letterSpacing: "0.3em", color: "var(--champagne)", marginBottom: "1.2rem" }}>
+                    {s.n}
+                  </span>
                   <h3
                     className="font-display"
                     style={{
-                      fontSize: "clamp(2.6rem, 7vw, 6rem)",
+                      fontSize: "clamp(2.4rem, 6vw, 5rem)",
                       fontWeight: 300,
                       letterSpacing: "-0.03em",
                       lineHeight: 1,
-                      marginBottom: "1.6rem",
+                      marginBottom: "1.4rem",
                     }}
                   >
                     {s.name}
                   </h3>
-                  {/* drawn underline */}
                   <span
                     style={{
                       display: "block",
                       height: 1,
-                      width: i === active ? "clamp(3rem, 8vw, 7rem)" : 0,
+                      width: i === active ? "clamp(3rem, 8vw, 6rem)" : 0,
                       background: "var(--champagne)",
-                      marginBottom: "1.6rem",
+                      marginBottom: "1.4rem",
                       transition: "width 1s var(--ease-cine) .2s",
                     }}
                   />
-                  <p className="lede" style={{ fontSize: "clamp(1.1rem, 1.7vw, 1.5rem)", maxWidth: "26ch", color: "var(--platinum)" }}>
+                  <p className="lede" style={{ fontSize: "clamp(1.05rem, 1.6vw, 1.4rem)", maxWidth: "24ch", color: "var(--platinum)" }}>
                     {s.line}
                   </p>
                 </div>
               ))}
+            </div>
+
+            {/* animated graphic — the star of each stage */}
+            <div className="proc-graphic">
+              <ProcessGraphic active={active} />
             </div>
           </div>
         </div>
       </div>
 
       <style>{`
-        @media (max-width: 720px) { #process .proc-rail { display: none !important; } }
+        @media (max-width: 900px) {
+          #process .proc-grid { grid-template-columns: 1fr !important; }
+          #process .proc-rail { display: none !important; }
+          #process .proc-graphic { order: -1; max-width: 260px; margin: 0 auto 2rem; }
+        }
       `}</style>
     </section>
   );

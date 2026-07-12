@@ -81,13 +81,18 @@ export default function IntelligenceCore({ count = 5200 }: { count?: number }) {
     const arr = (pts.geometry.attributes.position as THREE.BufferAttribute)
       .array as Float32Array;
 
-    const breathe = 1 + Math.sin(t * 0.6) * 0.03;
-    const AMP = 0.09; // continuous churn amplitude — keeps EVERY particle alive
+    // only react to the cursor while the hero is actually on screen — and when
+    // it's scrolled away, snap the shell home so it's always pristine on return
+    const heroVisible =
+      typeof window !== "undefined" &&
+      window.scrollY < window.innerHeight * 0.9;
+    const springK = heroVisible ? 3.2 : 12; // fast reset when off-screen
+
+    const breathe = 1 + Math.sin(t * 0.6) * 0.025;
+    const AMP = 0.06; // continuous churn — every particle alive, shell stays tight
 
     for (let i = 0; i < count; i++) {
       const ix = i * 3;
-      // living target: home (breathing) + a unique per-particle drift so
-      // the entire shell is always in motion, not just where the cursor is
       const ox = Math.sin(t * 0.9 + seeds[ix]) * AMP;
       const oy = Math.sin(t * 1.15 + seeds[ix + 1]) * AMP;
       const oz = Math.cos(t * 0.8 + seeds[ix + 2]) * AMP;
@@ -98,24 +103,26 @@ export default function IntelligenceCore({ count = 5200 }: { count?: number }) {
       let y = arr[ix + 1];
       let z = arr[ix + 2];
 
-      // spring toward the living target
-      x += (hx - x) * d * 2.7;
-      y += (hy - y) * d * 2.7;
-      z += (hz - z) * d * 2.7;
+      // spring toward the living target (critically damped-ish, always returns)
+      const k = Math.min(1, d * springK);
+      x += (hx - x) * k;
+      y += (hy - y) * k;
+      z += (hz - z) * k;
 
-      // cursor parts the field — smooth front-weighting (no hard z cutoff,
-      // so particles never pop in/out of influence near the equator)
-      const front = Math.max(0, (z + RADIUS * 0.4) / (RADIUS * 1.4));
-      if (front > 0) {
-        const dx = x - mouse.current.x;
-        const dy = y - mouse.current.y;
-        const dist2 = dx * dx + dy * dy;
-        if (dist2 < 1.4) {
-          const f = (1 - dist2 / 1.4) * front * d * 8;
-          const inv = 1 / Math.sqrt(dist2 + 0.001);
-          x += dx * inv * f;
-          y += dy * inv * f;
-          z += f * 0.4;
+      // cursor parts the field — only while the hero is in view
+      if (heroVisible) {
+        const front = Math.max(0, (z + RADIUS * 0.4) / (RADIUS * 1.4));
+        if (front > 0) {
+          const dx = x - mouse.current.x;
+          const dy = y - mouse.current.y;
+          const dist2 = dx * dx + dy * dy;
+          if (dist2 < 1.1) {
+            const f = (1 - dist2 / 1.1) * front * d * 5.5;
+            const inv = 1 / Math.sqrt(dist2 + 0.001);
+            x += dx * inv * f;
+            y += dy * inv * f;
+            z += f * 0.3;
+          }
         }
       }
 
@@ -126,9 +133,10 @@ export default function IntelligenceCore({ count = 5200 }: { count?: number }) {
     (pts.geometry.attributes.position as THREE.BufferAttribute).needsUpdate =
       true;
 
-    // slow, intentional rotation + faint cursor-follow tilt
-    pts.rotation.y += d * 0.06;
-    pts.rotation.x += (pointer.y * 0.12 - pts.rotation.x) * d * 1.5;
+    // slow, intentional rotation + faint cursor-follow tilt (only in view)
+    pts.rotation.y += d * 0.055;
+    if (heroVisible)
+      pts.rotation.x += (pointer.y * 0.1 - pts.rotation.x) * d * 1.5;
   });
 
   return (
