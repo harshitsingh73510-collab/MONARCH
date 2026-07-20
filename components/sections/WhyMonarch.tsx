@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Reveal from "@/components/Reveal";
+import SignatureReveal from "@/components/SignatureReveal";
 
 const BELIEFS = [
   { no: "Anyone can follow references.", yes: "We become the reference." },
@@ -78,8 +79,8 @@ export default function WhyMonarch() {
           </h2>
         </Reveal>
 
-        <div
-          style={{
+        <SignatureReveal
+          contentStyle={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
             gap: "1px",
@@ -119,7 +120,7 @@ export default function WhyMonarch() {
               </p>
             </div>
           ))}
-        </div>
+        </SignatureReveal>
       </div>
     </section>
   );

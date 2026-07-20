@@ -2,6 +2,8 @@
 
 import { useRef, useState } from "react";
 import Reveal from "@/components/Reveal";
+import { sound } from "@/lib/sound";
+import SignatureReveal from "@/components/SignatureReveal";
 
 type Status = "idle" | "sending" | "done" | "error";
 
@@ -38,6 +40,7 @@ export default function Contact() {
         body: JSON.stringify(data),
       });
       setStatus(res.ok ? "done" : "error");
+      if (res.ok) sound.chime("success");
     } catch {
       setStatus("error");
     }
@@ -72,7 +75,7 @@ export default function Contact() {
         }}
       />
 
-      <div
+      <SignatureReveal
         className="section"
         style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: "46rem", margin: "0 auto", textAlign: "center" }}
       >
@@ -164,7 +167,7 @@ export default function Contact() {
             )}
           </form>
         )}
-      </div>
+      </SignatureReveal>
 
       <style>{`
         .c-input {

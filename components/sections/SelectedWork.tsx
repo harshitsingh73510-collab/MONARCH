@@ -1,6 +1,10 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { sound } from "@/lib/sound";
+import SignatureReveal from "@/components/SignatureReveal";
+import Worlds3DNav from "@/components/sections/Worlds3DNav";
+import { hasWebGL, prefersReducedMotion } from "@/lib/motion";
 
 type Project = {
   name: string;
@@ -67,13 +71,29 @@ function Panel({ p, i }: { p: Project; i: number }) {
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+
+    // one low tone as each case study takes the screen (sound is opt-in)
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) sound.chime("enter");
+        }
+      },
+      { threshold: 0.6 }
+    );
+    io.observe(wrap);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      io.disconnect();
+    };
   }, []);
 
   return (
     <div
       ref={wrapRef}
-      data-hover
+      data-cursor="label"
+      data-cursor-label="VIEW"
       className="work-panel"
       style={{
         position: "relative",
@@ -152,9 +172,28 @@ function Panel({ p, i }: { p: Project; i: number }) {
 }
 
 export default function SelectedWork() {
+  // Render the 2D panels on the server and as the universal fallback. Upgrade to
+  // the 3D worlds navigator only on capable clients (WebGL · fine pointer · wide
+  // viewport · motion allowed). A runtime WebGL error drops back to 2D.
+  const [use3D, setUse3D] = useState(false);
+
+  useEffect(() => {
+    const decide = () => {
+      const capable =
+        hasWebGL() &&
+        !prefersReducedMotion() &&
+        window.matchMedia("(pointer: fine)").matches &&
+        window.innerWidth >= 900;
+      setUse3D(capable);
+    };
+    decide();
+    window.addEventListener("resize", decide);
+    return () => window.removeEventListener("resize", decide);
+  }, []);
+
   return (
     <section id="work" style={{ position: "relative", zIndex: 2 }}>
-      <div
+      <SignatureReveal
         className="section"
         style={{ maxWidth: "84rem", margin: "0 auto", paddingBlock: "16vh 8vh", textAlign: "center" }}
       >
@@ -164,11 +203,13 @@ export default function SelectedWork() {
         <h2 className="display-md font-display" style={{ maxWidth: "18ch", margin: "0 auto" }}>
           A few worlds we&apos;ve been trusted to build.
         </h2>
-      </div>
+      </SignatureReveal>
 
-      {PROJECTS.map((p, i) => (
-        <Panel key={p.name} p={p} i={i} />
-      ))}
+      {use3D ? (
+        <Worlds3DNav projects={PROJECTS} onFail={() => setUse3D(false)} />
+      ) : (
+        PROJECTS.map((p, i) => <Panel key={p.name} p={p} i={i} />)
+      )}
 
       <style>{`
         .work-panel .work-title { transition: transform .6s var(--ease-cine); }

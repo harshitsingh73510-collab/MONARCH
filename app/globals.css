@@ -177,8 +177,15 @@ body {
 }
 
 /* ---- Custom cursor ---- */
+.cursor-trail {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  pointer-events: none;
+}
 .cursor-dot,
-.cursor-ring {
+.cursor-ring,
+.cursor-label {
   position: fixed;
   top: 0;
   left: 0;
@@ -187,6 +194,7 @@ body {
   border-radius: 999px;
   transform: translate(-50%, -50%);
   will-change: transform;
+  transition: opacity 0.3s var(--ease-cine);
 }
 .cursor-dot {
   width: 5px;
@@ -198,7 +206,8 @@ body {
   height: 34px;
   border: 1px solid var(--fog-strong);
   transition: width 0.4s var(--ease-cine), height 0.4s var(--ease-cine),
-    border-color 0.4s var(--ease-cine), background 0.4s var(--ease-cine);
+    border-color 0.4s var(--ease-cine), background 0.4s var(--ease-cine),
+    opacity 0.3s var(--ease-cine);
 }
 .cursor-ring.is-hover {
   width: 64px;
@@ -206,12 +215,240 @@ body {
   border-color: var(--champagne);
   background: rgba(232, 201, 143, 0.06);
 }
+/* label state — ring becomes a filled champagne disc carrying a word */
+.cursor-ring.is-label {
+  width: 74px;
+  height: 74px;
+  border-color: transparent;
+  background: rgba(232, 201, 143, 0.14);
+  backdrop-filter: blur(2px);
+}
+.cursor-label {
+  display: grid;
+  place-items: center;
+  width: 74px;
+  height: 74px;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.24em;
+  color: var(--champagne);
+  opacity: 0;
+  transition: opacity 0.35s var(--ease-cine);
+}
+.cursor-ring.is-label ~ .cursor-label,
+.cursor-label:empty {
+  /* shown only when the ring is in label mode (JS sets textContent) */
+}
+.cursor-ring.is-label + .cursor-label {
+  opacity: 1;
+}
+
+/* Motion-sensitive visitors: keep a cursor, drop the animated smear */
+@media (prefers-reduced-motion: reduce) {
+  .cursor-trail {
+    display: none;
+  }
+}
 
 .particle-canvas {
   position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
+}
+
+/* ---- Sound toggle glyph (three bars) ---- */
+.sound-glyph {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 11px;
+}
+.sound-glyph i {
+  width: 2px;
+  height: 3px;
+  background: currentColor;
+  border-radius: 1px;
+  transition: height 0.3s var(--ease-cine);
+}
+.sound-glyph.on i {
+  animation: eq 1s var(--ease-soft) infinite;
+}
+.sound-glyph.on i:nth-child(1) {
+  animation-delay: 0s;
+}
+.sound-glyph.on i:nth-child(2) {
+  animation-delay: 0.22s;
+}
+.sound-glyph.on i:nth-child(3) {
+  animation-delay: 0.44s;
+}
+@keyframes eq {
+  0%,
+  100% {
+    height: 3px;
+  }
+  50% {
+    height: 11px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sound-glyph.on i {
+    animation: none;
+    height: 7px;
+  }
+}
+
+/* ---- THE MONARCH MOVE: signature peel transition ---- */
+.peel {
+  position: relative;
+  isolation: isolate;
+}
+.peel-content {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 1s var(--ease-cine) 0.28s,
+    transform 1.1s var(--ease-cine) 0.28s;
+}
+.peel-sheet {
+  position: absolute;
+  inset: -1px;
+  z-index: 3;
+  pointer-events: none;
+  transform-origin: 50% 0%;
+  /* brushed-titanium sheet */
+  background: linear-gradient(
+      108deg,
+      var(--obsidian) 0%,
+      var(--graphite) 42%,
+      #24242a 52%,
+      var(--graphite) 62%,
+      var(--obsidian) 100%
+    );
+  /* a champagne seam of light rides the leading (bottom) edge */
+  box-shadow: inset 0 -1px 0 rgba(232, 201, 143, 0.55),
+    0 14px 40px -12px rgba(232, 201, 143, 0.25);
+  transform: translate3d(0, 0, 0) skewY(0deg) scaleY(1);
+  transition: transform 1.15s var(--ease-cine), opacity 1.15s var(--ease-cine);
+}
+.peel.is-peeled .peel-content {
+  opacity: 1;
+  transform: none;
+}
+.peel.is-peeled .peel-sheet {
+  transform: translate3d(-2%, -103%, 0) skewY(-3.5deg) scaleY(1.04);
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .peel-content {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .peel-sheet {
+    display: none;
+  }
+}
+
+/* ---- Tier 3: 3D worlds navigator ---- */
+.worlds-stick {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+  outline: none;
+}
+.worlds-overlay {
+  position: absolute;
+  left: 0;
+  bottom: clamp(7rem, 16vh, 11rem);
+  width: 100%;
+  padding-inline: var(--pad);
+  z-index: 2;
+  pointer-events: none;
+  text-align: center;
+}
+.worlds-meta {
+  max-width: 46rem;
+  margin: 0 auto;
+  animation: worldsMetaIn 0.7s var(--ease-cine);
+}
+@keyframes worldsMetaIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.worlds-name {
+  font-size: clamp(2.6rem, 8vw, 6.5rem);
+  font-weight: 300;
+  letter-spacing: -0.04em;
+  line-height: 0.94;
+}
+.worlds-hud {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: clamp(2.4rem, 6vh, 4rem);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+}
+.worlds-arrow {
+  background: none;
+  border: 1px solid var(--fog-strong);
+  color: var(--platinum);
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-size: 1rem;
+  transition: border-color 0.4s var(--ease-cine), color 0.4s var(--ease-cine),
+    background 0.4s var(--ease-cine);
+}
+.worlds-arrow:hover {
+  border-color: var(--champagne);
+  color: var(--champagne);
+  background: rgba(232, 201, 143, 0.05);
+}
+.worlds-dots {
+  display: flex;
+  gap: 0.7rem;
+}
+.worlds-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  border: none;
+  padding: 0;
+  background: var(--titanium-dim);
+  transition: background 0.4s var(--ease-cine), transform 0.4s var(--ease-cine),
+    width 0.4s var(--ease-cine);
+}
+.worlds-dot.is-active {
+  background: var(--champagne);
+  width: 22px;
+}
+.worlds-hint {
+  position: absolute;
+  top: clamp(6rem, 12vh, 8rem);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  color: var(--titanium-dim);
+  pointer-events: none;
+}
+@media (max-width: 900px) {
+  .worlds-hint {
+    display: none;
+  }
 }
 
 /* CTAs */

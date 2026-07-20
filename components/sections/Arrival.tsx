@@ -36,6 +36,7 @@ export default function Arrival() {
   return (
     <section
       id="top"
+      data-cursor="hero"
       style={{
         position: "relative",
         height: "100svh",

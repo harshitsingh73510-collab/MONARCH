@@ -16,6 +16,9 @@ export default function SmoothScroll({
       touchMultiplier: 1.6,
     });
 
+    // expose for imperative scrolling (e.g. the 3D worlds nav prev/next)
+    (window as unknown as { lenis?: Lenis }).lenis = lenis;
+
     let raf = 0;
     function frame(time: number) {
       lenis.raf(time);
@@ -26,6 +29,7 @@ export default function SmoothScroll({
     return () => {
       cancelAnimationFrame(raf);
       lenis.destroy();
+      delete (window as unknown as { lenis?: Lenis }).lenis;
     };
   }, []);
 

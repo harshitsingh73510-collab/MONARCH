@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { sound, SOUND_EVENT } from "@/lib/sound";
 
 export default function Chrome() {
   const barRef = useRef<HTMLDivElement>(null);
   const [scrolled, setScrolled] = useState(false);
+  const [soundOn, setSoundOn] = useState(false);
 
   useEffect(() => {
     const onScroll = () => {
@@ -16,7 +18,17 @@ export default function Chrome() {
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+
+    sound.init();
+    setSoundOn(sound.enabled);
+    const onSound = (e: Event) =>
+      setSoundOn((e as CustomEvent<boolean>).detail);
+    window.addEventListener(SOUND_EVENT, onSound);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener(SOUND_EVENT, onSound);
+    };
   }, []);
 
   return (
@@ -63,6 +75,32 @@ export default function Chrome() {
         <a href="#contact" data-hover style={{ color: "var(--titanium)" }}>
           Start a project
         </a>
+        <button
+          type="button"
+          data-hover
+          onClick={() => sound.toggle()}
+          aria-pressed={soundOn}
+          aria-label={soundOn ? "Mute sound" : "Unmute sound"}
+          title={soundOn ? "Sound on" : "Sound off"}
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "0.5rem",
+            background: "none",
+            border: "none",
+            padding: 0,
+            color: soundOn ? "var(--champagne)" : "var(--titanium)",
+            letterSpacing: "0.42em",
+            transition: "color .4s var(--ease-cine)",
+          }}
+        >
+          <span aria-hidden className={`sound-glyph${soundOn ? " on" : ""}`}>
+            <i />
+            <i />
+            <i />
+          </span>
+          {soundOn ? "SOUND" : "MUTED"}
+        </button>
       </nav>
 
       {/* scroll progress */}
