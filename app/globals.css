@@ -438,16 +438,29 @@ body {
 }
 .worlds-hint {
   position: absolute;
-  top: clamp(6rem, 12vh, 8rem);
+  top: clamp(5rem, 12vh, 8rem);
   left: 50%;
   transform: translateX(-50%);
   z-index: 2;
   color: var(--titanium-dim);
   pointer-events: none;
+  text-align: center;
+  width: max-content;
+  max-width: 90vw;
 }
-@media (max-width: 900px) {
-  .worlds-hint {
-    display: none;
+
+/* narrow screens: pull the meta up off the HUD, tighten the controls */
+@media (max-width: 640px) {
+  .worlds-overlay {
+    bottom: clamp(8.5rem, 22vh, 12rem);
+  }
+  .worlds-hud {
+    gap: 1.1rem;
+    bottom: clamp(1.6rem, 5vh, 3rem);
+  }
+  .worlds-arrow {
+    width: 40px;
+    height: 40px;
   }
 }
 

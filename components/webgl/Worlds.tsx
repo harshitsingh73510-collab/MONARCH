@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useRef } from "react";
-import { useFrame, type ThreeEvent } from "@react-three/fiber";
+import { useFrame, useThree, type ThreeEvent } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
 import * as THREE from "three";
 
@@ -38,6 +38,7 @@ export default function Worlds({
   const groups = useRef<THREE.Group[]>([]);
   const rig = useRef<THREE.Group>(null);
   const N = images.length;
+  const { viewport } = useThree();
 
   useFrame((state, delta) => {
     const d = Math.min(delta, 0.05);
@@ -45,6 +46,15 @@ export default function Worlds({
     const f = progressRef.current * (N - 1);
     const focus = Math.round(f);
     const k = Math.min(1, d * 7);
+
+    // responsive fit: shrink the whole rig so the focused card always fits the
+    // viewport width with breathing room — this is what makes it work on a
+    // narrow phone as well as a wide desktop.
+    const fit = THREE.MathUtils.clamp(
+      (viewport.width * 0.82) / CARD_W,
+      0.34,
+      1
+    );
 
     for (let i = 0; i < N; i++) {
       const g = groups.current[i];
@@ -76,13 +86,15 @@ export default function Worlds({
       glowMat.opacity += (targetGlow - glowMat.opacity) * k;
     }
 
-    // camera-follow parallax for depth
+    // camera-follow parallax for depth + responsive fit scale
     if (rig.current) {
-      const px = state.pointer.x * 0.5;
-      const py = state.pointer.y * 0.28;
+      const px = state.pointer.x * 0.5 * fit;
+      const py = state.pointer.y * 0.28 * fit;
       rig.current.position.x += (px - rig.current.position.x) * k * 0.6;
       rig.current.position.y +=
         (GROUP_Y + py - rig.current.position.y) * k * 0.6;
+      const rs = rig.current.scale.x + (fit - rig.current.scale.x) * k;
+      rig.current.scale.setScalar(rs);
     }
   });
 

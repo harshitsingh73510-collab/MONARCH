@@ -178,17 +178,10 @@ export default function SelectedWork() {
   const [use3D, setUse3D] = useState(false);
 
   useEffect(() => {
-    const decide = () => {
-      const capable =
-        hasWebGL() &&
-        !prefersReducedMotion() &&
-        window.matchMedia("(pointer: fine)").matches &&
-        window.innerWidth >= 900;
-      setUse3D(capable);
-    };
-    decide();
-    window.addEventListener("resize", decide);
-    return () => window.removeEventListener("resize", decide);
+    // Runs on EVERY device with WebGL — phones, tablets, desktops. The scene is
+    // responsive + touch-navigable. Only genuinely incapable clients (no WebGL)
+    // or visitors who ask for reduced motion get the 2D panel fallback.
+    setUse3D(hasWebGL() && !prefersReducedMotion());
   }, []);
 
   return (
