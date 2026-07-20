@@ -362,7 +362,7 @@ body {
 .worlds-overlay {
   position: absolute;
   left: 0;
-  bottom: clamp(7rem, 16vh, 11rem);
+  bottom: clamp(7.5rem, 20vh, 12rem);
   width: 100%;
   padding-inline: var(--pad);
   z-index: 2;
@@ -385,16 +385,16 @@ body {
   }
 }
 .worlds-name {
-  font-size: clamp(2.6rem, 8vw, 6.5rem);
+  font-size: clamp(1.9rem, 4.6vw, 3.6rem);
   font-weight: 300;
   letter-spacing: -0.04em;
-  line-height: 0.94;
+  line-height: 0.96;
 }
 .worlds-hud {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  bottom: clamp(2.4rem, 6vh, 4rem);
+  bottom: clamp(1.8rem, 4.5vh, 3rem);
   z-index: 3;
   display: flex;
   align-items: center;
@@ -436,12 +436,13 @@ body {
   background: var(--champagne);
   width: 22px;
 }
+/* small scroll cue, sits just above the dots (never over the card) */
 .worlds-hint {
   position: absolute;
-  top: clamp(5rem, 12vh, 8rem);
+  bottom: clamp(4.6rem, 11vh, 7rem);
   left: 50%;
   transform: translateX(-50%);
-  z-index: 2;
+  z-index: 3;
   color: var(--titanium-dim);
   pointer-events: none;
   text-align: center;
@@ -449,14 +450,26 @@ body {
   max-width: 90vw;
 }
 
-/* narrow screens: pull the meta up off the HUD, tighten the controls */
+/* bottom scrim so the caption always reads over the receding cards */
+.worlds-stick::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 46%;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(to top, var(--void) 6%, transparent 100%);
+}
+
+/* narrow screens: give the caption band more room, tighten the controls */
 @media (max-width: 640px) {
   .worlds-overlay {
-    bottom: clamp(8.5rem, 22vh, 12rem);
+    bottom: clamp(8.5rem, 20vh, 12rem);
   }
   .worlds-hud {
     gap: 1.1rem;
-    bottom: clamp(1.6rem, 5vh, 3rem);
   }
   .worlds-arrow {
     width: 40px;

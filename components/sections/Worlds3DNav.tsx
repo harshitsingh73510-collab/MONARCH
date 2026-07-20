@@ -33,14 +33,6 @@ export default function Worlds3DNav({
   const progressRef = useRef(0);
   const focusRef = useRef(0);
   const [focused, setFocused] = useState(0);
-  const [isTouch, setIsTouch] = useState(false);
-
-  useEffect(() => {
-    setIsTouch(
-      typeof window !== "undefined" &&
-        window.matchMedia("(pointer: coarse)").matches
-    );
-  }, []);
 
   useEffect(() => {
     const track = trackRef.current;
@@ -168,9 +160,7 @@ export default function Worlds3DNav({
           </button>
         </div>
 
-        <p className="worlds-hint eyebrow">
-          {isTouch ? "Swipe to explore" : "Scroll or use ← → to explore"}
-        </p>
+        <p className="worlds-hint eyebrow">↓ Scroll to explore</p>
       </div>
     </div>
   );

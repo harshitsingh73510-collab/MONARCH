@@ -37,7 +37,7 @@ export default function WorldsCanvas({
     <Boundary onError={onError}>
       <Canvas
         gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
-        camera={{ position: [0, 0.2, 6.2], fov: 42 }}
+        camera={{ position: [0, 0.2, 7.6], fov: 42 }}
         dpr={[1, 1.75]}
         style={{ position: "absolute", inset: 0 }}
         onCreated={({ gl }) => gl.setClearColor(0x000000, 0)}

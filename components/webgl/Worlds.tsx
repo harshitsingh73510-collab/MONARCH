@@ -5,10 +5,12 @@ import { useFrame, useThree, type ThreeEvent } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
 import * as THREE from "three";
 
-const CARD_W = 3.15;
-const CARD_H = 1.97;
+const CARD_W = 2.85;
+const CARD_H = 1.78;
 const SPACING = 3.05;
-const GROUP_Y = 0.28;
+// lift the whole rig into the upper half of the stage so the caption text has a
+// clean band beneath the cards (no more text-over-card overlap)
+const GROUP_Y = 1.47;
 
 /**
  * MONARCH "worlds" — the case studies as physical cards floating in 3D space
@@ -65,7 +67,7 @@ export default function Worlds({
       const tx = offset * SPACING * compression;
       const tz = -ax * 1.7;
       const ry = THREE.MathUtils.clamp(-offset * 0.5, -0.95, 0.95);
-      const scale = 1 + Math.max(0, 1 - ax) * 0.16;
+      const scale = 1 + Math.max(0, 1 - ax) * 0.12;
 
       g.position.x += (tx - g.position.x) * k;
       g.position.z += (tz - g.position.z) * k;
