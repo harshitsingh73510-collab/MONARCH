@@ -197,14 +197,17 @@ body {
   transition: opacity 0.3s var(--ease-cine);
 }
 .cursor-dot {
-  width: 5px;
-  height: 5px;
-  background: var(--platinum);
+  width: 9px;
+  height: 9px;
+  background: #ffffff;
+  /* thin dark halo keeps it visible on light panels + warm glow on dark ones */
+  box-shadow: 0 0 0 1px rgba(10, 10, 12, 0.35), 0 0 12px 2px rgba(232, 201, 143, 0.55);
 }
 .cursor-ring {
   width: 34px;
   height: 34px;
-  border: 1px solid var(--fog-strong);
+  border: 1.5px solid rgba(243, 242, 239, 0.55);
+  box-shadow: 0 0 0 1px rgba(10, 10, 12, 0.14);
   transition: width 0.4s var(--ease-cine), height 0.4s var(--ease-cine),
     border-color 0.4s var(--ease-cine), background 0.4s var(--ease-cine),
     opacity 0.3s var(--ease-cine);

@@ -12,6 +12,7 @@ export type Project = {
   role: string;
   year: string;
   image: string;
+  url: string;
 };
 
 /**
@@ -121,6 +122,26 @@ export default function Worlds3DNav({
             <p className="eyebrow" style={{ marginTop: "1.2rem", color: "var(--titanium)" }}>
               {p.role} · {p.year}
             </p>
+            <a
+              href={p.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-hover
+              aria-label={`${p.name} — open live site in a new tab`}
+              className="eyebrow text-champagne"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.5rem",
+                marginTop: "1.4rem",
+                pointerEvents: "auto",
+                textDecoration: "none",
+                borderBottom: "1px solid color-mix(in srgb, var(--champagne) 45%, transparent)",
+                paddingBottom: "0.2rem",
+              }}
+            >
+              Visit live site ↗
+            </a>
           </div>
         </div>
 

@@ -14,49 +14,54 @@ type Project = {
   year: string;
   image: string;
   focus: string; // background-position
+  url: string;
 };
 
 const PROJECTS: Project[] = [
   {
-    name: "Aurelis",
-    category: "Luxury brand world",
-    line: "A fragrance house, reborn as a place you could step inside.",
-    role: "Brand · Experience · WebGL",
+    name: "Noir",
+    category: "Fragrance house · Cinematic web",
+    line: "A house of invisible luxury — a perfume brand staged as a scent you move through, not a page you scroll.",
+    role: "Art Direction · WebGL · Motion",
     year: "2025",
-    image: "/assets/ai-core.webp",
+    image: "/assets/work-noir.webp",
     focus: "center",
+    url: "https://p3-nwiw.vercel.app",
   },
   {
-    name: "Meridian",
-    category: "Spatial commerce",
-    line: "A maison’s collection, rendered as a city you explore at dusk.",
-    role: "Art Direction · Engineering",
+    name: "Solace",
+    category: "Property · The Vela, Dubai",
+    line: "A single tower on the Gulf, sold the way it deserves — an interactive masterplan and a cinematic sales gallery.",
+    role: "Experience · Engineering",
     year: "2025",
-    image: "/assets/dubai.webp",
+    image: "/assets/work-solace.webp",
+    focus: "center",
+    url: "https://solace-development-group.vercel.app",
+  },
+  {
+    name: "Studio Aurea",
+    category: "Architecture studio · Editorial",
+    line: "Architecture remembered for generations — a warm, editorial world for a firm that builds in stone and light.",
+    role: "Brand · Art Direction · Web",
+    year: "2025",
+    image: "/assets/work-aurea.webp",
     focus: "center 60%",
+    url: "https://studio-aurea-gray.vercel.app",
   },
   {
-    name: "Obsidian",
-    category: "Interactive product",
-    line: "An architectural configurator carved from black glass and light.",
+    name: "Strata",
+    category: "Architecture practice · Live 3D",
+    line: "Built on the blueprint-to-reality process — a live 3D massing model that assembles itself as you explore.",
     role: "Design · Creative Technology",
-    year: "2024",
-    image: "/assets/birth-architecture.webp",
+    year: "2025",
+    image: "/assets/work-strata.webp",
     focus: "center",
-  },
-  {
-    name: "Solstice",
-    category: "Launch film",
-    line: "A cinematic reveal for a product the world hadn’t seen yet.",
-    role: "Direction · Motion · Web",
-    year: "2024",
-    image: "/assets/vision-sunrise.webp",
-    focus: "center 40%",
+    url: "https://strata-weld-two.vercel.app",
   },
 ];
 
 function Panel({ p, i }: { p: Project; i: number }) {
-  const wrapRef = useRef<HTMLDivElement>(null);
+  const wrapRef = useRef<HTMLAnchorElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -90,10 +95,14 @@ function Panel({ p, i }: { p: Project; i: number }) {
   }, []);
 
   return (
-    <div
+    <a
       ref={wrapRef}
+      href={p.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`${p.name} — open live site in a new tab`}
       data-cursor="label"
-      data-cursor-label="VIEW"
+      data-cursor-label="VISIT ↗"
       className="work-panel"
       style={{
         position: "relative",
@@ -101,6 +110,8 @@ function Panel({ p, i }: { p: Project; i: number }) {
         overflow: "hidden",
         display: "flex",
         alignItems: "flex-end",
+        textDecoration: "none",
+        color: "inherit",
       }}
     >
       <div
@@ -155,6 +166,12 @@ function Panel({ p, i }: { p: Project; i: number }) {
             <p className="lede" style={{ maxWidth: "34ch", color: "var(--platinum)" }}>
               {p.line}
             </p>
+            <span
+              className="work-visit eyebrow text-champagne"
+              style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", marginTop: "1.6rem" }}
+            >
+              Visit live site ↗
+            </span>
           </div>
 
           <div style={{ textAlign: "right", minWidth: "12rem" }}>
@@ -167,7 +184,7 @@ function Panel({ p, i }: { p: Project; i: number }) {
           </div>
         </div>
       </div>
-    </div>
+    </a>
   );
 }
 
@@ -207,6 +224,8 @@ export default function SelectedWork() {
       <style>{`
         .work-panel .work-title { transition: transform .6s var(--ease-cine); }
         .work-panel:hover .work-title { transform: translateX(0.6rem); }
+        .work-visit { opacity: .55; transition: opacity .5s var(--ease-cine), transform .5s var(--ease-cine); }
+        .work-panel:hover .work-visit { opacity: 1; transform: translateX(0.3rem); }
       `}</style>
     </section>
   );
