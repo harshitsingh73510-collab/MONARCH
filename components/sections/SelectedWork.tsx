@@ -21,7 +21,7 @@ const PROJECTS: Project[] = [
   {
     name: "Noir",
     category: "Fragrance house · Cinematic web",
-    line: "A house of invisible luxury — a perfume brand staged as a scent you move through, not a page you scroll.",
+    line: "An olfactory house with no product shots — only atmosphere. Smoke, crystal and gold drift across a living particle field until you can almost smell the page.",
     role: "Art Direction · WebGL · Motion",
     year: "2025",
     image: "/assets/work-noir.webp",
@@ -31,7 +31,7 @@ const PROJECTS: Project[] = [
   {
     name: "Solace",
     category: "Property · The Vela, Dubai",
-    line: "A single tower on the Gulf, sold the way it deserves — an interactive masterplan and a cinematic sales gallery.",
+    line: "A single tower on the Arabian Gulf, sold like the landmark it is — a cinematic descent, an interactive masterplan, and a private gallery built to close eight-figure views.",
     role: "Experience · Engineering",
     year: "2025",
     image: "/assets/work-solace.webp",
@@ -41,7 +41,7 @@ const PROJECTS: Project[] = [
   {
     name: "Studio Aurea",
     category: "Architecture studio · Editorial",
-    line: "Architecture remembered for generations — a warm, editorial world for a firm that builds in stone and light.",
+    line: "A practice that builds in stone, light and time. Warm, unhurried, editorial — architecture staged to be remembered for generations, not scrolled past.",
     role: "Brand · Art Direction · Web",
     year: "2025",
     image: "/assets/work-aurea.webp",
@@ -51,7 +51,7 @@ const PROJECTS: Project[] = [
   {
     name: "Strata",
     category: "Architecture practice · Live 3D",
-    line: "Built on the blueprint-to-reality process — a live 3D massing model that assembles itself as you explore.",
+    line: "Architecture from blueprint to reality, made literal — a 3D massing model that assembles itself as you move, structure becoming building in real time.",
     role: "Design · Creative Technology",
     year: "2025",
     image: "/assets/work-strata.webp",

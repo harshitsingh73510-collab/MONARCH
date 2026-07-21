@@ -26,11 +26,13 @@ export default function WorldsCanvas({
   images,
   progressRef,
   onSelect,
+  onOpen,
   onError,
 }: {
   images: string[];
   progressRef: React.MutableRefObject<number>;
   onSelect?: (i: number) => void;
+  onOpen?: (i: number) => void;
   onError: () => void;
 }) {
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -66,6 +68,7 @@ export default function WorldsCanvas({
               images={images}
               progressRef={progressRef}
               onSelect={onSelect}
+              onOpen={onOpen}
             />
           </Suspense>
         </Canvas>

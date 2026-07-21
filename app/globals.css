@@ -55,11 +55,12 @@ body {
   line-height: 1.6;
 }
 
-/* Hide native cursor on precise pointers — the custom cursor takes over */
-@media (pointer: fine) {
-  * {
-    cursor: none !important;
-  }
+/* Native cursor stays visible everywhere. Interactive elements get a pointer. */
+a,
+button,
+[data-hover],
+[data-cursor] {
+  cursor: pointer;
 }
 
 ::selection {

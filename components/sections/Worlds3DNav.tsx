@@ -103,6 +103,9 @@ export default function Worlds3DNav({
           images={projects.map((x) => x.image)}
           progressRef={progressRef}
           onSelect={scrollToIndex}
+          onOpen={(i) =>
+            window.open(projects[i].url, "_blank", "noopener,noreferrer")
+          }
           onError={onFail}
         />
 

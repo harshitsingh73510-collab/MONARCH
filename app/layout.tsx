@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
-import Cursor from "@/components/Cursor";
 import Grain from "@/components/Grain";
 import Chrome from "@/components/Chrome";
 
@@ -40,7 +39,6 @@ export default function RootLayout({
     >
       <body>
         <Grain />
-        <Cursor />
         <Chrome />
         <SmoothScroll>{children}</SmoothScroll>
       </body>

@@ -23,10 +23,12 @@ export default function Worlds({
   images,
   progressRef,
   onSelect,
+  onOpen,
 }: {
   images: string[];
   progressRef: React.MutableRefObject<number>;
   onSelect?: (i: number) => void;
+  onOpen?: (i: number) => void;
 }) {
   const textures = useTexture(images) as THREE.Texture[];
   useMemo(() => {
@@ -88,13 +90,11 @@ export default function Worlds({
       glowMat.opacity += (targetGlow - glowMat.opacity) * k;
     }
 
-    // camera-follow parallax for depth + responsive fit scale
+    // scroll-driven only — the rig holds a fixed, centred position and just
+    // eases its responsive fit scale (no pointer/cursor parallax)
     if (rig.current) {
-      const px = state.pointer.x * 0.5 * fit;
-      const py = state.pointer.y * 0.28 * fit;
-      rig.current.position.x += (px - rig.current.position.x) * k * 0.6;
-      rig.current.position.y +=
-        (GROUP_Y + py - rig.current.position.y) * k * 0.6;
+      rig.current.position.x += (0 - rig.current.position.x) * k * 0.6;
+      rig.current.position.y += (GROUP_Y - rig.current.position.y) * k * 0.6;
       const rs = rig.current.scale.x + (fit - rig.current.scale.x) * k;
       rig.current.scale.setScalar(rs);
     }
@@ -111,9 +111,14 @@ export default function Worlds({
           position={[i * SPACING, 0, -2]}
           onClick={(e: ThreeEvent<MouseEvent>) => {
             e.stopPropagation();
-            onSelect?.(i);
+            // clicking the focused (front) card opens its live site; clicking a
+            // side card brings it to the front first
+            const focus = Math.round(progressRef.current * (N - 1));
+            if (i === focus) onOpen?.(i);
+            else onSelect?.(i);
           }}
-          onPointerOver={() => (document.body.style.cursor = "none")}
+          onPointerOver={() => (document.body.style.cursor = "pointer")}
+          onPointerOut={() => (document.body.style.cursor = "")}
         >
           {/* image card (child 0) */}
           <mesh>
