@@ -365,7 +365,7 @@ body {
 .worlds-overlay {
   position: absolute;
   left: 0;
-  bottom: clamp(7.5rem, 20vh, 12rem);
+  bottom: clamp(5rem, 13vh, 8.5rem);
   width: 100%;
   padding-inline: var(--pad);
   z-index: 2;
@@ -373,7 +373,7 @@ body {
   text-align: center;
 }
 .worlds-meta {
-  max-width: 46rem;
+  max-width: 42rem;
   margin: 0 auto;
   animation: worldsMetaIn 0.7s var(--ease-cine);
 }
@@ -388,7 +388,7 @@ body {
   }
 }
 .worlds-name {
-  font-size: clamp(1.9rem, 4.6vw, 3.6rem);
+  font-size: clamp(1.8rem, 4vw, 3rem);
   font-weight: 300;
   letter-spacing: -0.04em;
   line-height: 0.96;

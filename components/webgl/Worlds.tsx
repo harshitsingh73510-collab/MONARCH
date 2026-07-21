@@ -10,7 +10,7 @@ const CARD_H = 1.78;
 const SPACING = 3.05;
 // lift the whole rig into the upper half of the stage so the caption text has a
 // clean band beneath the cards (no more text-over-card overlap)
-const GROUP_Y = 1.47;
+const GROUP_Y = 1.95;
 
 /**
  * MONARCH "worlds" — the case studies as physical cards floating in 3D space
