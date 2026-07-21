@@ -118,7 +118,7 @@ export default function Worlds3DNav({
             <h3 className="font-display worlds-name">{p.name}</h3>
             <p
               className="lede"
-              style={{ maxWidth: "32ch", color: "var(--platinum)", marginTop: "0.6rem" }}
+              style={{ maxWidth: "34ch", color: "var(--platinum)", margin: "0.6rem auto 0" }}
             >
               {p.line}
             </p>
