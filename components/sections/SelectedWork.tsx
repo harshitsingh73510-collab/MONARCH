@@ -116,6 +116,7 @@ function Panel({ p, i }: { p: Project; i: number }) {
     >
       <div
         ref={bgRef}
+        className="work-bg"
         style={{
           position: "absolute",
           inset: 0,
@@ -136,7 +137,7 @@ function Panel({ p, i }: { p: Project; i: number }) {
       />
 
       <div
-        className="section"
+        className="section work-copy"
         style={{
           position: "relative",
           zIndex: 2,
@@ -226,6 +227,15 @@ export default function SelectedWork() {
         .work-panel:hover .work-title { transform: translateX(0.6rem); }
         .work-visit { opacity: .55; transition: opacity .5s var(--ease-cine), transform .5s var(--ease-cine); }
         .work-panel:hover .work-visit { opacity: 1; transform: translateX(0.3rem); }
+
+        /* Phones: a full-height cover crop showed only a ~26%-wide sliver of each
+           landscape image. Stack the WHOLE image above the copy instead so
+           nothing important is cut. Desktop + the 3D navigator are untouched. */
+        @media (max-width: 640px) {
+          .work-panel { height: auto !important; min-height: auto !important; flex-direction: column; align-items: stretch !important; }
+          .work-bg { position: relative !important; inset: auto !important; width: 100%; aspect-ratio: 16 / 10; transform: none !important; }
+          .work-copy { padding-block: 1.6rem 3rem !important; }
+        }
       `}</style>
     </section>
   );
