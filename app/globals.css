@@ -366,7 +366,7 @@ button,
 .worlds-overlay {
   position: absolute;
   left: 0;
-  bottom: clamp(5rem, 13vh, 8.5rem);
+  bottom: clamp(8rem, 18vh, 11rem);
   width: 100%;
   padding-inline: var(--pad);
   z-index: 2;

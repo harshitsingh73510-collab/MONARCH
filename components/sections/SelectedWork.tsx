@@ -21,7 +21,7 @@ const PROJECTS: Project[] = [
   {
     name: "Noir",
     category: "Fragrance house · Cinematic web",
-    line: "An olfactory house with no product shots — only atmosphere. Smoke, crystal and gold drift across a living particle field until you can almost smell the page.",
+    line: "A fragrance house sold as pure atmosphere — smoke, crystal and gold moving across a living particle field.",
     role: "Art Direction · WebGL · Motion",
     year: "2025",
     image: "/assets/work-noir.webp",
@@ -31,7 +31,7 @@ const PROJECTS: Project[] = [
   {
     name: "Solace",
     category: "Property · The Vela, Dubai",
-    line: "A single tower on the Arabian Gulf, sold like the landmark it is — a cinematic descent, an interactive masterplan, and a private gallery built to close eight-figure views.",
+    line: "One tower on the Arabian Gulf — a cinematic descent and an interactive masterplan that sells the view.",
     role: "Experience · Engineering",
     year: "2025",
     image: "/assets/work-solace.webp",
@@ -41,7 +41,7 @@ const PROJECTS: Project[] = [
   {
     name: "Studio Aurea",
     category: "Architecture studio · Editorial",
-    line: "A practice that builds in stone, light and time. Warm, unhurried, editorial — architecture staged to be remembered for generations, not scrolled past.",
+    line: "An architecture practice built in stone and light — warm, editorial, made to be remembered for generations.",
     role: "Brand · Art Direction · Web",
     year: "2025",
     image: "/assets/work-aurea.webp",
@@ -51,7 +51,7 @@ const PROJECTS: Project[] = [
   {
     name: "Strata",
     category: "Architecture practice · Live 3D",
-    line: "Architecture from blueprint to reality, made literal — a 3D massing model that assembles itself as you move, structure becoming building in real time.",
+    line: "Blueprint to reality, made literal — a live 3D massing model that builds itself as you scroll.",
     role: "Design · Creative Technology",
     year: "2025",
     image: "/assets/work-strata.webp",
