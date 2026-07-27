@@ -8,6 +8,7 @@ import WhyMonarch from "@/components/sections/WhyMonarch";
 import Vision from "@/components/sections/Vision";
 import Contact from "@/components/sections/Contact";
 import Footer from "@/components/sections/Footer";
+import Marquee from "@/components/Marquee";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
       <Ecosystem />
       <Process />
       <SelectedWork />
+      <Marquee />
       <WhyMonarch />
       <Vision />
       <Contact />

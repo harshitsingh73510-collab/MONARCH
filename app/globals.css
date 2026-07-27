@@ -514,6 +514,112 @@ button,
   color: var(--champagne);
 }
 
+/* ---- Ignition: the opening curtain ---- */
+.ignition {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  overflow: hidden;
+  pointer-events: none;
+}
+.ignition-sheet {
+  position: absolute;
+  inset: -1px;
+  transform-origin: 50% 0%;
+  display: grid;
+  place-items: center;
+  will-change: transform;
+  /* brushed-titanium — the studio's signature surface */
+  background: linear-gradient(
+    108deg,
+    var(--void) 0%,
+    var(--obsidian) 38%,
+    #1c1c22 50%,
+    var(--obsidian) 62%,
+    var(--void) 100%
+  );
+  /* champagne seam rides the leading (bottom) edge as it peels */
+  box-shadow: inset 0 -1px 0 rgba(232, 201, 143, 0.5),
+    0 22px 60px -18px rgba(232, 201, 143, 0.22);
+}
+.ignition-content {
+  text-align: center;
+  padding-inline: var(--pad);
+}
+.ignition-eyebrow {
+  margin-bottom: clamp(1.2rem, 3vh, 2rem);
+}
+.ignition-word {
+  display: flex;
+  justify-content: center;
+  gap: 0.02em;
+  font-weight: 300;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+  font-size: clamp(2.6rem, 9vw, 8rem);
+}
+.ignition-word span {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+.ignition-meter {
+  margin-top: clamp(1.8rem, 4vh, 3rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+.ignition-track {
+  display: block;
+  width: clamp(120px, 22vw, 220px);
+  height: 1px;
+  background: var(--fog-strong);
+  overflow: hidden;
+}
+.ignition-fill {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: var(--champagne);
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+.ignition-count {
+  font-size: 0.72rem;
+  letter-spacing: 0.24em;
+  color: var(--titanium);
+}
+
+/* ---- Kinetic marquee band ---- */
+.marquee {
+  position: relative;
+  overflow: hidden;
+  border-block: 1px solid var(--fog);
+  padding-block: clamp(1.1rem, 2.6vh, 2rem);
+  user-select: none;
+}
+.marquee-track {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  will-change: transform;
+}
+.marquee-item {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  font-size: clamp(1.8rem, 5vw, 4.2rem);
+  color: var(--platinum);
+  padding-inline: clamp(1rem, 2vw, 2rem);
+}
+.marquee-dot {
+  color: var(--champagne);
+  font-size: 0.5em;
+  margin-inline: clamp(1rem, 2.5vw, 2.4rem);
+  transform: translateY(-0.1em);
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar {
   width: 0;

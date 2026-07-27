@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
+import Magnetic from "@/components/Magnetic";
 
 const HeroCore = dynamic(() => import("@/components/webgl/HeroCore"), {
   ssr: false,
@@ -183,12 +184,16 @@ export default function Arrival() {
             transition: "opacity 1.6s var(--ease-cine) 2s",
           }}
         >
-          <a href="#work" data-hover className="font-mono cta cta-primary">
-            View selected work
-          </a>
-          <a href="#contact" data-hover className="font-mono cta cta-ghost">
-            Start a project
-          </a>
+          <Magnetic>
+            <a href="#work" data-hover className="font-mono cta cta-primary">
+              View selected work
+            </a>
+          </Magnetic>
+          <Magnetic>
+            <a href="#contact" data-hover className="font-mono cta cta-ghost">
+              Start a project
+            </a>
+          </Magnetic>
         </div>
       </div>
 

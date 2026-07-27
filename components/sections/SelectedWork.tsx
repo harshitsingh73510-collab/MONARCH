@@ -58,6 +58,16 @@ const PROJECTS: Project[] = [
     focus: "center",
     url: "https://strata-weld-two.vercel.app",
   },
+  {
+    name: "ÆRA",
+    category: "Single-object luxury · Live 3D",
+    line: "One impossible object — a tungsten mass in a titanium gimbal that the whole scroll orbits, marking sidereal time.",
+    role: "Concept · Art Direction · WebGL",
+    year: "2025",
+    image: "/assets/work-aera.webp",
+    focus: "center",
+    url: "https://aera-eight.vercel.app",
+  },
 ];
 
 function Panel({ p, i }: { p: Project; i: number }) {
