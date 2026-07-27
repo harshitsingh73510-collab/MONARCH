@@ -4,7 +4,6 @@ import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import Grain from "@/components/Grain";
 import Chrome from "@/components/Chrome";
-import Ignition from "@/components/Ignition";
 
 const display = Space_Grotesk({
   variable: "--font-display",
@@ -39,7 +38,6 @@ export default function RootLayout({
       className={`${display.variable} ${body.variable} ${mono.variable}`}
     >
       <body>
-        <Ignition />
         <Grain />
         <Chrome />
         <SmoothScroll>{children}</SmoothScroll>
