@@ -1,252 +1,118 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { sound } from "@/lib/sound";
-import SignatureReveal from "@/components/SignatureReveal";
-import Worlds3DNav from "@/components/sections/Worlds3DNav";
-import { hasWebGL, prefersReducedMotion } from "@/lib/motion";
+import dynamic from "next/dynamic";
+import { useEffect, useRef } from "react";
+import { PROJECTS } from "@/lib/projects";
+import Reveal from "@/components/Reveal";
+import RollText from "@/components/RollText";
+import TLink from "@/components/transition/TLink";
 
-type Project = {
-  name: string;
-  category: string;
-  line: string;
-  role: string;
-  year: string;
-  image: string;
-  focus: string; // background-position
-  url: string;
-};
+const CardsGL = dynamic(() => import("@/components/work/CardsGL"), { ssr: false });
 
-const PROJECTS: Project[] = [
-  {
-    name: "Noir",
-    category: "Fragrance house · Cinematic web",
-    line: "A fragrance house sold as pure atmosphere — smoke, crystal and gold moving across a living particle field.",
-    role: "Art Direction · WebGL · Motion",
-    year: "2025",
-    image: "/assets/work-noir.webp",
-    focus: "center",
-    url: "https://p3-nwiw.vercel.app",
-  },
-  {
-    name: "Solace",
-    category: "Property · The Vela, Dubai",
-    line: "One tower on the Arabian Gulf — a cinematic descent and an interactive masterplan that sells the view.",
-    role: "Experience · Engineering",
-    year: "2025",
-    image: "/assets/work-solace.webp",
-    focus: "center",
-    url: "https://solace-development-group.vercel.app",
-  },
-  {
-    name: "Studio Aurea",
-    category: "Architecture studio · Editorial",
-    line: "An architecture practice built in stone and light — warm, editorial, made to be remembered for generations.",
-    role: "Brand · Art Direction · Web",
-    year: "2025",
-    image: "/assets/work-aurea.webp",
-    focus: "center 60%",
-    url: "https://studio-aurea-gray.vercel.app",
-  },
-  {
-    name: "Strata",
-    category: "Architecture practice · Live 3D",
-    line: "Blueprint to reality, made literal — a live 3D massing model that builds itself as you scroll.",
-    role: "Design · Creative Technology",
-    year: "2025",
-    image: "/assets/work-strata.webp",
-    focus: "center",
-    url: "https://strata-weld-two.vercel.app",
-  },
-  {
-    name: "ÆRA",
-    category: "Single-object luxury · Live 3D",
-    line: "One impossible object — a tungsten mass in a titanium gimbal that the whole scroll orbits, marking sidereal time.",
-    role: "Concept · Art Direction · WebGL",
-    year: "2025",
-    image: "/assets/work-aera.webp",
-    focus: "center",
-    url: "https://aera-eight.vercel.app",
-  },
-];
+/**
+ * 02 — SELECTED WORK. A light gallery that slides up over the dark page like a
+ * sheet. Images are re-drawn in WebGL (CardsGL): they bend with scroll speed,
+ * open on a curved wipe, and play a silent reel of the live site on hover.
+ * Every card opens the real site in a new tab.
+ */
+export default function SelectedWork({ page = false }: { page?: boolean }) {
+  const ref = useRef<HTMLElement>(null);
 
-function Panel({ p, i }: { p: Project; i: number }) {
-  const wrapRef = useRef<HTMLAnchorElement>(null);
-  const bgRef = useRef<HTMLDivElement>(null);
-
+  // The gallery lights come on: the sheet arrives dark, warms to paper as it
+  // rises into view, and dims back to dark as you leave — no hard cut.
   useEffect(() => {
-    const wrap = wrapRef.current;
-    const bg = bgRef.current;
-    if (!wrap || !bg) return;
-    const onScroll = () => {
-      const r = wrap.getBoundingClientRect();
+    const el = ref.current;
+    if (!el || page) return;
+    let raf = 0;
+    const smooth = (x: number) => {
+      const t = Math.min(1, Math.max(0, x));
+      return t * t * (3 - 2 * t);
+    };
+    const paint = () => {
+      raf = 0;
+      const r = el.getBoundingClientRect();
       const vh = window.innerHeight;
-      const prog = (r.top + r.height / 2 - vh / 2) / vh; // -1..1
-      bg.style.transform = `scale(1.14) translateY(${prog * -34}px)`;
+      const enter = smooth((vh - r.top) / (vh * 1.05));
+      const exit = smooth(r.bottom / (vh * 1.05));
+      el.style.setProperty("--k", Math.min(enter, exit).toFixed(3));
     };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-
-    // one low tone as each case study takes the screen (sound is opt-in)
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (e.isIntersecting) sound.chime("enter");
-        }
-      },
-      { threshold: 0.6 }
-    );
-    io.observe(wrap);
-
+    const on = () => {
+      if (!raf) raf = requestAnimationFrame(paint);
+    };
+    paint();
+    window.addEventListener("scroll", on, { passive: true });
+    window.addEventListener("resize", on);
     return () => {
-      window.removeEventListener("scroll", onScroll);
-      io.disconnect();
+      window.removeEventListener("scroll", on);
+      window.removeEventListener("resize", on);
+      cancelAnimationFrame(raf);
     };
-  }, []);
+  }, [page]);
 
   return (
-    <a
-      ref={wrapRef}
-      href={p.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={`${p.name} — open live site in a new tab`}
-      data-cursor="label"
-      data-cursor-label="VISIT ↗"
-      className="work-panel"
-      style={{
-        position: "relative",
-        height: "100svh",
-        overflow: "hidden",
-        display: "flex",
-        alignItems: "flex-end",
-        textDecoration: "none",
-        color: "inherit",
-      }}
-    >
-      <div
-        ref={bgRef}
-        className="work-bg"
-        style={{
-          position: "absolute",
-          inset: 0,
-          backgroundImage: `url(${p.image})`,
-          backgroundSize: "cover",
-          backgroundPosition: p.focus,
-          willChange: "transform",
-          filter: "saturate(0.92)",
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          background:
-            "linear-gradient(to top, rgba(5,5,6,0.92) 0%, rgba(5,5,6,0.3) 40%, rgba(5,5,6,0.55) 100%)",
-        }}
-      />
+    <section ref={ref} id="work" className={`lw${page ? " lw--page" : ""}`}>
+      <div className="lw-in">
+        <header className="lw-head">
+          <Reveal className="lw-head-main">
+            {!page && <p className="eyebrow lw-eyebrow">02 — Selected work</p>}
+            <h2 className="lw-title font-display">
+              <span className="mask-line">
+                <span>{page ? "Projects" : "Selected Work"}</span>
+              </span>
+            </h2>
+          </Reveal>
+          <Reveal delay={200} className="lw-head-side">
+            <p className="font-mono lw-intro">
+              Six worlds built from nothing — each with its own light, its own material, its own
+              rules. Every one is live.
+            </p>
+          </Reveal>
+        </header>
 
-      <div
-        className="section work-copy"
-        style={{
-          position: "relative",
-          zIndex: 2,
-          width: "100%",
-          maxWidth: "84rem",
-          margin: "0 auto",
-          paddingBottom: "clamp(3rem, 10vh, 8rem)",
-        }}
-      >
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "1.5rem" }}>
-          <div>
-            <p className="eyebrow text-champagne" style={{ marginBottom: "1.4rem" }}>
-              {String(i + 1).padStart(2, "0")} · {p.category}
-            </p>
-            <h3
-              className="font-display work-title"
-              style={{
-                fontSize: "clamp(3.2rem, 10vw, 9rem)",
-                fontWeight: 300,
-                letterSpacing: "-0.04em",
-                lineHeight: 0.92,
-                marginBottom: "1.2rem",
-              }}
-            >
-              {p.name}
-            </h3>
-            <p className="lede" style={{ maxWidth: "34ch", color: "var(--platinum)" }}>
-              {p.line}
-            </p>
-            <span
-              className="work-visit eyebrow text-champagne"
-              style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", marginTop: "1.6rem" }}
-            >
-              Visit live site ↗
-            </span>
-          </div>
+        <ul className="lw-grid">
+          {PROJECTS.map((p, i) => (
+            <li key={p.slug} className="lw-item" style={{ ["--d" as string]: `${(i % 2) * 90}ms` }}>
+              <a
+                href={p.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="lw-card roll-host"
+                data-cursor-label="VISIT ↗"
+                aria-label={`${p.name} — ${p.kind}. Opens the live site in a new tab.`}
+              >
+                <div
+                  className="lw-media"
+                  data-gl-card={p.cover}
+                  data-gl-reel={JSON.stringify(p.reel)}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={p.cover} alt="" loading="lazy" />
+                  <span className="lw-open font-mono" aria-hidden>
+                    Live site ↗
+                  </span>
+                </div>
+                <p className="lw-tags font-mono">{p.tags.join(" • ")}</p>
+                <h3 className="lw-name font-display">
+                  <RollText text={p.name} />
+                </h3>
+                <p className="lw-line">{p.line}</p>
+              </a>
+            </li>
+          ))}
+        </ul>
 
-          <div style={{ textAlign: "right", minWidth: "12rem" }}>
-            <p className="eyebrow" style={{ marginBottom: "0.6rem" }}>
-              {p.role}
-            </p>
-            <p className="eyebrow" style={{ color: "var(--titanium-dim)" }}>
-              {p.year}
-            </p>
+        {!page && (
+          <div className="lw-more">
+            <TLink href="/work" label="Projects" className="pill pill-dark">
+              <i className="pill-dot" />
+              <span className="pill-roll" data-text="See all projects">
+                See all projects
+              </span>
+            </TLink>
           </div>
-        </div>
+        )}
       </div>
-    </a>
-  );
-}
-
-export default function SelectedWork() {
-  // Render the 2D panels on the server and as the universal fallback. Upgrade to
-  // the 3D worlds navigator only on capable clients (WebGL · fine pointer · wide
-  // viewport · motion allowed). A runtime WebGL error drops back to 2D.
-  const [use3D, setUse3D] = useState(false);
-
-  useEffect(() => {
-    // Runs on EVERY device with WebGL — phones, tablets, desktops. The scene is
-    // responsive + touch-navigable. Only genuinely incapable clients (no WebGL)
-    // or visitors who ask for reduced motion get the 2D panel fallback.
-    setUse3D(hasWebGL() && !prefersReducedMotion());
-  }, []);
-
-  return (
-    <section id="work" style={{ position: "relative", zIndex: 2 }}>
-      <SignatureReveal
-        className="section"
-        style={{ maxWidth: "84rem", margin: "0 auto", paddingBlock: "16vh 8vh", textAlign: "center" }}
-      >
-        <p className="eyebrow" style={{ marginBottom: "1.6rem" }}>
-          05 — Selected work
-        </p>
-        <h2 className="display-md font-display" style={{ maxWidth: "18ch", margin: "0 auto" }}>
-          A few worlds we&apos;ve been trusted to build.
-        </h2>
-      </SignatureReveal>
-
-      {use3D ? (
-        <Worlds3DNav projects={PROJECTS} onFail={() => setUse3D(false)} />
-      ) : (
-        PROJECTS.map((p, i) => <Panel key={p.name} p={p} i={i} />)
-      )}
-
-      <style>{`
-        .work-panel .work-title { transition: transform .6s var(--ease-cine); }
-        .work-panel:hover .work-title { transform: translateX(0.6rem); }
-        .work-visit { opacity: .55; transition: opacity .5s var(--ease-cine), transform .5s var(--ease-cine); }
-        .work-panel:hover .work-visit { opacity: 1; transform: translateX(0.3rem); }
-
-        /* Phones: a full-height cover crop showed only a ~26%-wide sliver of each
-           landscape image. Stack the WHOLE image above the copy instead so
-           nothing important is cut. Desktop + the 3D navigator are untouched. */
-        @media (max-width: 640px) {
-          .work-panel { height: auto !important; min-height: auto !important; flex-direction: column; align-items: stretch !important; }
-          .work-bg { position: relative !important; inset: auto !important; width: 100%; aspect-ratio: 16 / 10; transform: none !important; }
-          .work-copy { padding-block: 1.6rem 3rem !important; }
-        }
-      `}</style>
+      <CardsGL scope={ref} />
     </section>
   );
 }

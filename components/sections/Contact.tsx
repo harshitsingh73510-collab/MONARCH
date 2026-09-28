@@ -81,7 +81,7 @@ export default function Contact() {
       >
         <Reveal>
           <p className="eyebrow" style={{ marginBottom: "2rem" }}>
-            08 — Let&apos;s begin
+            07 — Let&apos;s begin
           </p>
           <h2 className="display-lg font-display" style={{ maxWidth: "16ch", marginInline: "auto", marginBottom: "1.4rem" }}>
             Let&apos;s build something impossible.
@@ -152,12 +152,11 @@ export default function Contact() {
                   fontSize: "0.8rem",
                   letterSpacing: "0.24em",
                   textTransform: "uppercase",
-                  cursor: "none",
                   transition: "transform .35s var(--ease-cine), border-color .4s, background .4s",
                 }}
               >
                 <span style={{ width: 6, height: 6, borderRadius: 99, background: "var(--champagne)" }} />
-                {status === "sending" ? "Sending…" : status === "error" ? "Try again" : "Request access"}
+                {status === "sending" ? "Sending…" : status === "error" ? "Try again" : "Start the conversation"}
               </button>
             </div>
             {status === "error" && (

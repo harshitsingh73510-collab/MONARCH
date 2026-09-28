@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import "./lusion.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import Grain from "@/components/Grain";
 import Chrome from "@/components/Chrome";
+import CursorLabel from "@/components/CursorLabel";
+import TransitionProvider from "@/components/transition/TransitionProvider";
 
 const display = Space_Grotesk({
   variable: "--font-display",
@@ -38,9 +41,12 @@ export default function RootLayout({
       className={`${display.variable} ${body.variable} ${mono.variable}`}
     >
       <body>
-        <Grain />
-        <Chrome />
-        <SmoothScroll>{children}</SmoothScroll>
+        <TransitionProvider>
+          <Grain />
+          <Chrome />
+          <SmoothScroll>{children}</SmoothScroll>
+          <CursorLabel />
+        </TransitionProvider>
       </body>
     </html>
   );

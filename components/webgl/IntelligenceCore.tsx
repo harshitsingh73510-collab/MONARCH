@@ -83,12 +83,18 @@ export default function IntelligenceCore({ count = 6400 }: { count?: number }) {
 
   const mouse = useRef(new THREE.Vector3(999, 999, 0));
   const scatter = useRef(0); // eased scroll-driven dispersion
+  // Own clock that only advances while frames render. R3F's clock keeps
+  // running while the hero is paused off-screen; on return the rotation angle
+  // had jumped, so every particle sprang sideways to its new home — the
+  // "particles slide right and retract" bug.
+  const time = useRef(0);
 
-  useFrame((state, delta) => {
+  useFrame((_, delta) => {
     const pts = ref.current;
     if (!pts) return;
-    const t = state.clock.elapsedTime;
     const d = Math.min(delta, 0.05);
+    time.current += d;
+    const t = time.current;
 
     const arr = (pts.geometry.attributes.position as THREE.BufferAttribute)
       .array as Float32Array;

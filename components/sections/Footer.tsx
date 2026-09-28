@@ -1,8 +1,16 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import TLink from "@/components/transition/TLink";
 
-export default function Footer() {
+const LINKS = [
+  { href: "/work", label: "Work" },
+  { href: "/studio", label: "Studio" },
+  { href: "/founder", label: "Founder" },
+  { href: "/contact", label: "Contact" },
+];
+
+export default function Footer({ compact = false }: { compact?: boolean }) {
   const ref = useRef<HTMLElement>(null);
   const [inView, setInView] = useState(false);
 
@@ -23,7 +31,7 @@ export default function Footer() {
       style={{
         position: "relative",
         zIndex: 2,
-        minHeight: "94svh",
+        minHeight: compact ? "70svh" : "94svh",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -77,9 +85,13 @@ export default function Footer() {
         }}
       >
         <p className="eyebrow">Monarch — a digital experience studio</p>
-        <a href="#contact" data-hover className="font-mono" style={{ color: "var(--titanium)", fontSize: "0.8rem", textDecoration: "none" }}>
-          Start a project →
-        </a>
+        <nav className="footer-links" aria-label="Footer">
+          {LINKS.map((l) => (
+            <TLink key={l.href} href={l.href} label={l.label} className="eyebrow chrome-link">
+              {l.label}
+            </TLink>
+          ))}
+        </nav>
         <p className="eyebrow" style={{ color: "var(--titanium-dim)" }}>
           © {new Date().getFullYear()}
         </p>
@@ -117,6 +129,7 @@ export default function Footer() {
           0% { background-position: 180% 0; }
           55%, 100% { background-position: -80% 0; }
         }
+        .footer-links { display: flex; gap: clamp(1rem, 2.4vw, 2.4rem); flex-wrap: wrap; }
         @media (prefers-reduced-motion: reduce) {
           .finale-word { transition: opacity .6s; filter: none; letter-spacing: -0.03em; }
           .finale-word[data-in="1"] { animation: none; }

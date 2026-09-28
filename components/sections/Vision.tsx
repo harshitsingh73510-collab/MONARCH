@@ -6,7 +6,7 @@ export default function Vision() {
   return (
     <StatementSequence
       id="future"
-      eyebrow="07 — The future"
+      eyebrow="What comes next"
       image="/assets/vision-sunrise.webp"
       focus="center 40%"
       lines={[

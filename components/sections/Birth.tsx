@@ -6,7 +6,7 @@ export default function Birth() {
   return (
     <StatementSequence
       id="belief"
-      eyebrow="02 — What we believe"
+      eyebrow="What we believe"
       image="/assets/birth-architecture.webp"
       lines={[
         <>Technology should disappear.</>,
