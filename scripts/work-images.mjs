@@ -16,7 +16,7 @@ const MAP = {
   vanta: { hero: "h0", cover: 1, rooms: 2, spa: 3, silence: 4, contour: 5, site: 6 },
   noctis: { hero: 0, cover: 0, embers: 1, materials: 3, field: 4, amber: 6 },
   monolith: { hero: "h1", cover: 5, object: 2, memory: 3, signal: 4, core: 6 },
-  vela: { hero: 3, cover: 3, manifesto: 1, descent: 2, ascent: 4, materials: 5, crop: { top: 64 } },
+  strata: { hero: 0, a: 1, b: 5, c: 7 },
   aera: { hero: 0, cover: 1, wait: 0, titanium: 2, precision: 3, plate: 4 },
 };
 
@@ -27,18 +27,8 @@ const COVERS = {
   vanta: [5, 420, 20, 1500, 840],
   noctis: [0, 470, 0, 880, 1080],
   monolith: [6, 160, 0, 1600, 770],
-  vela: [3, 0, 70, 1920, 760],
+  strata: [1, 1210, 220, 710, 520],
   aera: [1, 420, 70, 1080, 700],
-};
-
-// Full-screen "moment" plates — also text-free, since a line is set over them
-const MOMENTS = {
-  noir: [5, 950, 100, 970, 980],
-  vanta: [4, 0, 560, 1920, 520],
-  noctis: [2, 0, 580, 1920, 500],
-  monolith: [3, 200, 100, 1520, 820],
-  vela: [4, 0, 64, 1920, 820],
-  aera: [1, 250, 60, 1420, 740],
 };
 
 for (const [site, map] of Object.entries(MAP)) {
@@ -62,12 +52,5 @@ for (const [site, map] of Object.entries(MAP)) {
     .resize({ width: 1800, withoutEnlargement: true })
     .webp({ quality: 82 })
     .toFile(path.join(out, "cover.webp"));
-  {
-    const [n, left, t, width, height] = MOMENTS[site];
-    await sharp(path.join(SRC, `${site}-${n}.png`))
-      .extract({ left, top: t, width, height })
-      .webp({ quality: 82 })
-      .toFile(path.join(out, "moment.webp"));
-  }
   console.log("done", site);
 }

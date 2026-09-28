@@ -4,7 +4,7 @@ import Footer from "@/components/sections/Footer";
 
 export const metadata: Metadata = {
   title: "Projects · MONARCH",
-  description: "Six worlds built by Monarch — Noir, Vanta, Noctis, Monolith, Vela and ÆRA. Every one is live.",
+  description: "Six worlds built by Monarch — Noir, Vanta, Noctis, Monolith, Strata and ÆRA. Every one is live.",
 };
 
 export default function WorkPage() {
